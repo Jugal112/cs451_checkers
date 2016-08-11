@@ -1,0 +1,13 @@
+<script src="jquery-1.12.4.min.js"></script>
+<script>
+function testOk(){
+    // this invokes a method on a Java bean registered previously.
+    window.foo.foo('test');
+    // log an error
+    alert('have called a method');
+}
+</script>
+
+<body>
+    <button id="okTest" onclick="app.exit()">Run OK Test</button>
+</body>

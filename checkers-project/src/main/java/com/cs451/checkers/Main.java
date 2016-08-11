@@ -11,6 +11,7 @@ public class Main extends Application {
 			primaryStage.setTitle("Checkers");
 	        primaryStage.setScene(new Menu().getScene(primaryStage));
 	        primaryStage.show();
+	        
 	    } catch(Exception e) {
 			e.printStackTrace();
 		}
