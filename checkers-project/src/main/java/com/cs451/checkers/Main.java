@@ -1,6 +1,7 @@
 package com.cs451.checkers;
 
 import javafx.application.Application;
+import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 
@@ -9,9 +10,9 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		try {
 			primaryStage.setTitle("Checkers");
-	        primaryStage.setScene(new Menu().getScene(primaryStage));
+			final Browser browser = new Browser();
+	        primaryStage.setScene(new Scene(browser, 800, 600));
 	        primaryStage.show();
-	        
 	    } catch(Exception e) {
 			e.printStackTrace();
 		}

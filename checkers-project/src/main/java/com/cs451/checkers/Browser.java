@@ -1,5 +1,7 @@
 package com.cs451.checkers;
 
+import org.w3c.dom.Document;
+
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
@@ -38,35 +40,28 @@ class Browser extends Region {
         //add the web view to the scene
         getChildren().add(browser);
         
+        //This listener catches javascript that is calling to the java backend, these methods can be found in JavaOps.java
+        //On the JS side it is in the form of JavaOps.method(parameter)
         webEngine.getLoadWorker().stateProperty().addListener(
-        		new ChangeListener<State>() {
-                    public void changed(ObservableValue<? extends State> ov,
-                        State oldState, State newState) {
-                        if (newState == State.SUCCEEDED) {
-                                JSObject win = 
-                                    (JSObject) webEngine.executeScript("window");
-                                win.setMember("app", new JavaApp());
-                            }
+                new ChangeListener<State>(){
+
+                    @Override
+                    public void changed(ObservableValue<? extends State> ov, State oldState, State newState) {
+                        if(newState == State.SUCCEEDED){
+                            JSObject window = (JSObject)webEngine.executeScript("window");
+                            window.setMember("javaOp", new JavaOps());
+
                         }
                     }
-            );
+                });
+        
+    }
+    
+    public Object executeJavascript(String js){
+    	// Whatever is returned from the javascript call is returned and cast to the Java equivalent
+    	return webEngine.executeScript(js);
+    }
 
-    }
-    
-    // JavaScript interface object
-    public class JavaApp {
- 
-        public void exit() {
-            webEngine.executeScript("document.write('AAAAAAA');");
-        }
-    }
-    
-    private Node createSpacer() {
-        Region spacer = new Region();
-        HBox.setHgrow(spacer, Priority.ALWAYS);
-        return spacer;
-    }
- 
     @Override protected void layoutChildren() {
         double w = getWidth();
         double h = getHeight();

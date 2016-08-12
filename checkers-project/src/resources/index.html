@@ -1,13 +1,23 @@
-<script src="jquery-1.12.4.min.js"></script>
-<script>
-function testOk(){
-    // this invokes a method on a Java bean registered previously.
-    window.foo.foo('test');
-    // log an error
-    alert('have called a method');
-}
-</script>
+<!doctype html>
+    <html lang="en" data-ng-app="checkersApp">
+      <head>
+        <meta charset="utf-8">
+        <title>Checkers</title>
+        	<!-- before any uses of the backend objects -->
+ 			<script src="jslib/jquery-1.9.1.min.js"></script>
+ 			
+ 			<script src="jslib/angular.min.js" type="text/javascript"></script>
+         	<script src="jslib/angular-route.js"></script>
 
-<body>
-    <button id="okTest" onclick="app.exit()">Run OK Test</button>
-</body>
+			<script src="js/script.js" type="text/javascript"></script>			
+			<link rel="stylesheet" href="style.css">
+			
+			<!--Debugger feel free to comment out if not in use -->
+			<script type='text/javascript' src='http://getfirebug.com/releases/lite/1.2/firebug-lite-compressed.js'></script>
+      	</head>
+
+     	<body>
+			<div ng-view>
+			</div>
+	</body>
+</html>
