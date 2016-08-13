@@ -33,15 +33,26 @@ class Browser extends Region {
     final WebEngine webEngine = browser.getEngine();
      
     public Browser() {
-        getStyleClass().add("browser");
         String path = System.getProperty("user.dir");
-        // load the web page
-        webEngine.load("file://"+ path + "/src/resources/index.html");
         //add the web view to the scene
         getChildren().add(browser);
-        
-        //This listener catches javascript that is calling to the java backend, these methods can be found in JavaOps.java
+
+        JSObject window = (JSObject)webEngine.executeScript("window");
+        window.setMember("javaOp", new JavaOps());
+     
+        //load the web page
+        webEngine.load("file://"+ path + "/src/resources/index.html");
+    }
+    
+    public Object executeJavascript(String js){
+    	// Whatever is returned from the javascript call is returned and cast to the Java equivalent
+    	return webEngine.executeScript(js);
+    }
+    
+    //Deprecated for now
+    public void addListenerAfterLoad(){
         //On the JS side it is in the form of JavaOps.method(parameter)
+
         webEngine.getLoadWorker().stateProperty().addListener(
                 new ChangeListener<State>(){
 
@@ -50,16 +61,9 @@ class Browser extends Region {
                         if(newState == State.SUCCEEDED){
                             JSObject window = (JSObject)webEngine.executeScript("window");
                             window.setMember("javaOp", new JavaOps());
-
                         }
                     }
                 });
-        
-    }
-    
-    public Object executeJavascript(String js){
-    	// Whatever is returned from the javascript call is returned and cast to the Java equivalent
-    	return webEngine.executeScript(js);
     }
 
     @Override protected void layoutChildren() {

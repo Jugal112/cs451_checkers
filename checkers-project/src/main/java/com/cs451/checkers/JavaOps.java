@@ -9,4 +9,7 @@ public class JavaOps {
     public void exit() {
         Platform.exit();
     }
+    public String getIPAddress() {
+    	return "0.0.0.0";
+    }
 }

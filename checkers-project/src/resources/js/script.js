@@ -1,6 +1,6 @@
 var checkersApp = angular.module('checkersApp', ['ngRoute']);
 
-// configure our routes
+// configure routes
 checkersApp.config(function($routeProvider) {
     $routeProvider
         .when('/', {
@@ -15,7 +15,7 @@ checkersApp.config(function($routeProvider) {
 
         .when('/client', {
             templateUrl : 'pages/client.html',
-            controller  : 'contactController'
+            controller  : 'clientController'
         })
 
 		.when('/checkers', {
@@ -24,24 +24,63 @@ checkersApp.config(function($routeProvider) {
 		});
 });
 
-// create the controller and inject Angular's $scope
+// angular controllers
 checkersApp.controller('menuController', function($scope) {
-	javaOp.debug("TEST");
+	//javaOp.debug("Entered Main Menu");
 });
 
 checkersApp.controller('hostController', function($scope) {
+	//javaOp.debug("Entered Host");
+	$scope.address = "IP: " + javaOp.getIPAddress();
 });
 
 checkersApp.controller('clientController', function($scope) {
+	//javaOp.debug("Entered Client!");
+	
+	$(".client #button button").click(function(){
+		javaOp.debug('Entered ip: ' + $(".client #ip input").val());
+		window.location.href = '#checkers';
+	});
 });
 
-checkersApp.controller('checkerController', function($scope) {
+checkersApp.controller('checkersController', function($scope) {
+	//javaOp.debug("Entered Checkers!");
+	
+	var pw = $(".pane").height();
+
+	$('.pane').css({
+	    'width': pw + 'px'
+	});
+	
+	//create board
+	var board = "";
+	var alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g'];
+
+	for(var i = 0; i < 8; i++){
+		board += "<td>";
+		for(var j = 0; j < 8; j++){
+			var location = alphabet[i] + j.toString();
+			
+			if((i+j)%2 == 1){
+				board += "<tr class='light' id='" + location + "'></tr>";
+			}
+			else{
+				board += "<tr class='dark' id='" + location + "'></tr>";
+			}
+		}
+		board += "</td>";
+	}
 });
 
+// helper functions.  Should mainly, if only, be called by java side
 function receieveMessage(string){
 	JSON.parse(string);
 }
 
 function sendBackMessage(string){
-	JavaOp.debug(string);
+	//javaOp.debug(string);
+}
+
+function exit(){
+	//javaOp.exit();
 }

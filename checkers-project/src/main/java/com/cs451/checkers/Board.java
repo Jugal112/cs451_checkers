@@ -1,7 +1,5 @@
 package com.cs451.checkers;
 
-import java.util.HashMap;
-
 public class Board {
 	String[][] pieces;
 	
