@@ -1,4 +1,4 @@
-package application;
+package com.cs451.checkers;
 
 import java.io.Serializable;
 

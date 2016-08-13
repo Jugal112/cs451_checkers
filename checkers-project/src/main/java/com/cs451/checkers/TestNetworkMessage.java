@@ -1,4 +1,4 @@
-package application;
+package com.cs451.checkers;
 
 /**
  * Created by chris on 8/7/16.
