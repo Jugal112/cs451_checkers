@@ -1,1 +1,6 @@
 checkers/bin/
+.metadata/
+target/
+bin/
+*.swp
+*.swo
