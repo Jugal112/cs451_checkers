@@ -9,9 +9,9 @@ import java.util.logging.Logger;
 /**
  * Created by chris on 7/31/16.
  */
-public class NormalNetworkManager extends NetworkManager{
+public class NormalNetworkManager implements NetworkManager{
 
-    private static NetworkManager  instance;
+    private static NormalNetworkManager  instance;
     private static final Logger log = Logger.getGlobal();
     private static DataOutputStream out;
     private static InputStream in;
@@ -19,13 +19,11 @@ public class NormalNetworkManager extends NetworkManager{
     private static ServerSocket s_sock;
 
 
-    @Override
-    public NetworkManager getInstance() {
+    public static NormalNetworkManager getInstance() {
         if(instance == null) instance = new NormalNetworkManager();
         return instance;
     }
 
-    @Override
     public int connect(URL url) {
         if(sock == null) {
             log.info("Trying to connect to " + url.toString());
@@ -57,7 +55,6 @@ public class NormalNetworkManager extends NetworkManager{
         return 0;
     }
 
-    @Override
     public int host(int port) {
         if(s_sock == null) {
             log.info("Trying to host a server on port " + port);
@@ -68,6 +65,7 @@ public class NormalNetworkManager extends NetworkManager{
                 return -1;
             }
         }
+        log.info("Server socket created successfully");
         if(sock == null) {
             try {
                 sock = s_sock.accept();
@@ -98,7 +96,6 @@ public class NormalNetworkManager extends NetworkManager{
         return 0;
     }
 
-    @Override
     public int sendMessage(NetworkMessage msg) {
         try {
             log.info("Trying to send message over network");
@@ -111,7 +108,6 @@ public class NormalNetworkManager extends NetworkManager{
         return 0;
     }
 
-    @Override
     public NetworkMessage receiveMessage() {
         NetworkMessage ret;
         try {
@@ -128,13 +124,11 @@ public class NormalNetworkManager extends NetworkManager{
         return ret;
     }
 
-    @Override
     public boolean isConnected() {
         if(sock.isConnected()) return true;
         else return false;
     }
 
-    @Override
     public int close() {
         try {
             sock.close();

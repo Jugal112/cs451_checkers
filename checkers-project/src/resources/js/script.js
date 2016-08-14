@@ -32,6 +32,10 @@ checkersApp.controller('menuController', function($scope) {
 checkersApp.controller('hostController', function($scope) {
 	//javaOp.debug("Entered Host");
 	$scope.address = "IP: " + javaOp.getIPAddress();
+	$(".host #button button").click(function(){
+		javaOp.startHost();
+	});
+
 });
 
 checkersApp.controller('clientController', function($scope) {
@@ -39,6 +43,7 @@ checkersApp.controller('clientController', function($scope) {
 	
 	$(".client #button button").click(function(){
 		javaOp.debug('Entered ip: ' + $(".client #ip input").val());
+                javaOp.startClient($(".client #ip input").val());
 		window.location.href = '#checkers';
 	});
 });
