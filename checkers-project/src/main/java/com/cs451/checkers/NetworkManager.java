@@ -9,13 +9,7 @@ import java.util.logging.Logger;
  * messages and closing connections.
  * Created by chris on 7/26/16.
  */
-public abstract class NetworkManager {
-    private static NetworkManager  instance;
-    private static final Logger    log = Logger.getGlobal();
-
-    protected NetworkManager() {}
-
-    public abstract NetworkManager getInstance();
+public interface NetworkManager {
     public abstract int            connect(URL url);
     public abstract int            host(int port);
     public abstract int            sendMessage(NetworkMessage msg);
