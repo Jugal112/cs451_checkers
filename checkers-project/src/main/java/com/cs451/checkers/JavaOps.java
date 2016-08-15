@@ -1,8 +1,6 @@
 package com.cs451.checkers;
 
-<<<<<<< HEAD
 import org.mortbay.util.ajax.JSON;
-=======
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.MalformedURLException;
