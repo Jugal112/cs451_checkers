@@ -12,7 +12,7 @@ public class TestNetworkMessage extends NetworkMessage {
 
     @Override
     public void set(Object data) {
-        message = (String)data;
+        message = (String) data;
     }
 
     @Override
