@@ -74,8 +74,6 @@ public class JavaOps {
     
     public String getPieces() {
     	String[][] pieces = new Board().getBoard();
-    	System.out.println(JSON.toString(pieces));
-    	System.out.println("ASDAS");
     	return JSON.toString(pieces);
     }
 }
