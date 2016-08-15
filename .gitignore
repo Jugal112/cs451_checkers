@@ -4,3 +4,7 @@ target/
 bin/
 *.swp
 *.swo
+
+# Idea
+.idea
+*.iml
