@@ -4,20 +4,44 @@ import junit.framework.TestCase;
 
 public class CheckerTest extends TestCase {
 
+	private Checker redChecker;
+	private Checker blackChecker;
+
 	public void testGetColor() {
-		fail("Not yet implemented");
+		redChecker = new Checker("r");
+		blackChecker = new Checker("b");
+
+		assertTrue("r".equals(redChecker.getColor()));
+		assertTrue("b".equals(blackChecker.getColor()));
 	}
 
 	public void testSetColor() {
-		fail("Not yet implemented");
+		redChecker = new Checker("r");
+		blackChecker = new Checker("b");
+
+		assertTrue("r".equals(redChecker.getColor()));
+		assertTrue("b".equals(blackChecker.getColor()));
+
+		redChecker.setColor("b");
+		blackChecker.setColor("r");
+
+		assertTrue("b".equals(redChecker.getColor()));
+		assertTrue("r".equals(blackChecker.getColor()));
 	}
 
 	public void testChecker() {
-		fail("Not yet implemented");
+		redChecker = null;
+		assertTrue(redChecker==null);
+		redChecker = new Checker("r");
+		assertTrue(redChecker != null);
 	}
 
 	public void testToString() {
-		fail("Not yet implemented");
+		redChecker = new Checker("r");
+		blackChecker = new Checker("b");
+
+		assertTrue("r".equals(redChecker.getColor()));
+		assertTrue("b".equals(blackChecker.getColor()));
 	}
 
 }
