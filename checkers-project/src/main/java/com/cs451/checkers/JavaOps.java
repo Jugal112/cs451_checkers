@@ -65,7 +65,8 @@ public class JavaOps {
     }
 
     public String getPieces() {
-        String[][] pieces = new Board().getBoard();
+        Board board = new Board();
+        String[][] pieces = board.toStringArray();
         return JSON.toString(pieces);
     }
 }
