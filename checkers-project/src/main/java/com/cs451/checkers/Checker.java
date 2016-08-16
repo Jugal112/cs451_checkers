@@ -18,6 +18,13 @@ public class Checker {
         this.color = color;
     }
 
+    public boolean isOpponent (Checker checker) {
+        if (this.color.equals(checker.getColor())) {
+            return false;
+        }
+        return true;
+    }
+
     public String toString() {
         return this.color;
     }

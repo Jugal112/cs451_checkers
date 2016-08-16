@@ -1,5 +1,7 @@
 package com.cs451.checkers;
 
+import java.net.URISyntaxException;
+
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Worker.State;
@@ -15,7 +17,7 @@ class Browser extends Region {
     final WebView browser = new WebView();
     final WebEngine webEngine = browser.getEngine();
 
-    public Browser() {
+    public Browser() throws URISyntaxException {
         String path = System.getProperty("user.dir");
         //add the web view to the scene
         getChildren().add(browser);
@@ -25,7 +27,8 @@ class Browser extends Region {
         window.setMember("javaOp", new JavaOps());
 
         //load the web page
-        webEngine.load("file:/" + path + "/src/resources/index.html");
+        webEngine.load(getClass().getResource("/index.html").toURI().toString());
+
     }
 
     public Object executeJavascript(String js) {

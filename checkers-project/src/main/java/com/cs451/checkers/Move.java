@@ -15,20 +15,20 @@ public class Move {
         this.move = moves;
     }
 
-    public String getType() {
-        return type;
+    public boolean getIsAttack() {
+        return isAttack;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public Move isAttack() {
+        this.isAttack = true;
+        return this;
     }
 
     private ArrayList<Position> move;
-    private String type = null;
+    private boolean isAttack = false;
 
-    public Move(String type) {
+    public Move() {
         move = new ArrayList<Position>();
-        this.type = type;
     }
 
 }

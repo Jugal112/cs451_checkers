@@ -37,33 +37,35 @@ public class Board {
         return pieces_str;
     }
 
-//    public ArrayList<Position> getValidMoves(Position pos) {
-//        ArrayList<Position> moves = new ArrayList<Position>();
-//        Checker checker = getPiece(pos);
-//        if (getPiece(pos) instanceof Checker) {
-//            int direction = 1;
-//            if (checker.getColor().equals("b")) {
-//                direction = -1;
-//            }
-//            Position
-//        } else {
-//            return null;
-//        }
-//        return moves;
-//    }
-//
-//    public ArrayList<Position> getJumpMoves(Position pos) {
-//        ArrayList<Position> jumps = new ArrayList<Position>();
-//
-//        return jumps;
-//    }
+    public ArrayList<Move> getValidMoves(Position pos) {
+        ArrayList<Move> moves = new ArrayList<Move>();
+        Checker checker = getPiece(pos);
+        if (getPiece(pos) instanceof Checker) {
+            int direction = 1;
+            if (checker.getColor().equals("b")) {
+                direction = -1;
+            }
+            if (getPiece(pos.frontLeft(direction)) == null) {
 
-    public void movePiece(Position source, Position destination, String move_type) {
+            }
+        } else {
+            return null;
+        }
+        return moves;
+    }
+
+    public ArrayList<Position> getJumpMoves(Position pos) {
+        ArrayList<Position> jumps = new ArrayList<Position>();
+
+        return jumps;
+    }
+
+    public void movePiece(Position source, Position destination, boolean isAttack) {
         if (getPiece(source) instanceof Checker && getPiece(destination) == null) {
             Checker checker = getPiece(source);
             setPiece(source, null);
             setPiece(destination, checker);
-            if (move_type.equals("attack")) {
+            if (isAttack) {
                 killPiece(between(source, destination));
             }
         }
@@ -77,11 +79,14 @@ public class Board {
 
     public void makeMove(Move move) {
         for (int i = 0; i < move.getMove().size(); i++) {
-            movePiece(move.getMove().get(i), move.getMove().get(i+1), move.getType());
+            movePiece(move.getMove().get(i), move.getMove().get(i+1), move.getIsAttack());
         }
     }
 
     public Checker getPiece(Position pos) {
+        if (pos == null) {
+            return null;
+        }
         return pieces[pos.getRow()][pos.getColumn()];
     }
 
