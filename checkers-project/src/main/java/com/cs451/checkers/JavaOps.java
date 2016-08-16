@@ -49,8 +49,9 @@ public class JavaOps {
         	final Stage dialog = new Stage();
             dialog.initModality(Modality.APPLICATION_MODAL);
             dialog.initOwner(Main.stage);
+            dialog.setTitle("Error!");
             VBox dialogVbox = new VBox(20);
-            dialogVbox.getChildren().add(new Text("FUCK YO BITCH ASS"));
+            dialogVbox.getChildren().add(new Text("Unable to connect to specified host!"));
             Scene dialogScene = new Scene(dialogVbox, 300, 200);
             dialog.setScene(dialogScene);
             dialog.show();
