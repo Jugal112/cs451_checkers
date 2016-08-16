@@ -42,9 +42,11 @@ checkersApp.controller('menuController', function($scope) {
 checkersApp.controller('hostController', function($scope) {
 	//javaOp.debug("Entered Host");
 	$scope.address = "IP: " + javaOp.getIPAddress();
-	$(".host #button button").click(function(){
-		javaOp.startHost();
-	});
+	javaOp.startHost();
+	/*$(".host #button button").click(function(){
+		
+		window.location.href='#checkers';
+	});*/
 
 });
 
@@ -53,8 +55,8 @@ checkersApp.controller('clientController', function($scope) {
 	//javaOp.debug("Entered Client!");
 	$(".client #button button").click(function(){
 		javaOp.debug('Entered ip: ' + $(".client #ip input").val());
-                javaOp.startClient($(".client #ip input").val());
-		window.location.href = '#checkers';
+                var ret = javaOp.startClient($(".client #ip input").val());
+		if(ret == 0) window.location.href = '#checkers';
 	});
 });
 
@@ -191,4 +193,9 @@ function sendBackMessage(string){
 
 function exit(){
 	//javaOp.exit();
+}
+
+function host_continue(){
+	javaOp.debug("FUCKING BALLSACKS");
+	window.location.href='#checkers';
 }

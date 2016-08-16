@@ -3,6 +3,7 @@ package com.cs451.checkers;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 import java.net.URL;
 import java.util.logging.Logger;
 
@@ -64,7 +65,15 @@ public class NormalNetworkManager implements NetworkManager {
         log.info("Server socket created successfully");
         if (sock == null) {
             try {
-                sock = s_sock.accept();
+            	s_sock.setSoTimeout(2000); // Set accept timeout
+            	while(true) {
+            		try {
+            		sock = s_sock.accept();
+            		break;
+            		} catch(IOException e) {
+            			log.info("Still waiting for client to connect");
+            		}
+            	}
             } catch (IOException e) {
                 log.severe("Error connecting socket");
                 return -1;
