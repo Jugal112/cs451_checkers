@@ -8,3 +8,5 @@ bin/
 # Idea
 .idea
 *.iml
+*/target/**
+*/target/*
