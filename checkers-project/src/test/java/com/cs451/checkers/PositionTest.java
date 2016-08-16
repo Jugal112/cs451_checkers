@@ -4,24 +4,35 @@ import junit.framework.TestCase;
 
 public class PositionTest extends TestCase {
 
+	private Position p;
 	public void testGetRow() {
-		fail("Not yet implemented");
+		p = new Position(1, 2);
+		assertTrue(p.getRow() == 1);
 	}
 
 	public void testSetRow() {
-		fail("Not yet implemented");
+		p = new Position(1, 2);
+		assertTrue(p.getRow() == 1);
+		p.setRow(3);
+		assertTrue(p.getRow() == 3);
 	}
 
 	public void testGetColumn() {
-		fail("Not yet implemented");
+		p = new Position(1, 2);
+		assertTrue(p.getColumn() == 2);
 	}
 
 	public void testSetColumn() {
-		fail("Not yet implemented");
-	}
+		p = new Position(1, 2);
+		assertTrue(p.getColumn() == 2);
+		p.setColumn(3);
+		assertTrue(p.getColumn() == 3);	}
 
 	public void testPosition() {
-		fail("Not yet implemented");
+		p = null;
+		assertTrue(p == null);
+		p = new Position(0, 0);
+		assertTrue(p != null);
 	}
 
 }
