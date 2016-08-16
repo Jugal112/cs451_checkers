@@ -1,6 +1,12 @@
 package com.cs451.checkers;
 
 import javafx.application.Platform;
+import javafx.scene.Scene;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+
 import org.mortbay.util.ajax.JSON;
 
 import java.net.*;
@@ -20,22 +26,38 @@ public class JavaOps {
     }
 
     public void startHost() {
-        NetworkManager net = NormalNetworkManager.getInstance();
-        net.host(port);
+    	HostWaitingThread wt = new HostWaitingThread(port);
+    	wt.start();
     }
 
-    public void startClient(String url) {
+    public int startClient(String url) {
+    	int ret = -1;
+    	
         if (!url.contains("http://")) {
             url = "http://" + url;
         }
         try {
             URL u = new URL(url + ":" + port);
             NetworkManager net = NormalNetworkManager.getInstance();
-            net.connect(u);
+            ret = net.connect(u);
         } catch (MalformedURLException e) {
             // TODO Auto-generated catch block
             log.severe("Error the URL entered was invalid");
         }
+        
+        if(ret == -1) {
+        	final Stage dialog = new Stage();
+            dialog.initModality(Modality.APPLICATION_MODAL);
+            dialog.initOwner(Main.stage);
+            dialog.setTitle("Error!");
+            VBox dialogVbox = new VBox(20);
+            dialogVbox.getChildren().add(new Text("Unable to connect to specified host!"));
+            Scene dialogScene = new Scene(dialogVbox, 300, 200);
+            dialog.setScene(dialogScene);
+            dialog.show();
+        }
+        
+        return ret;
     }
 
     public String getIPAddress() {
