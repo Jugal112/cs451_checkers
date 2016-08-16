@@ -27,8 +27,8 @@ class Browser extends Region {
         window.setMember("javaOp", new JavaOps());
 
         //load the web page
-        webEngine.load(getClass().getResource("/index.html").toURI().toString());
-
+        //webEngine.load("file:/" + path + "/src/resources/index.html");
+        webEngine.load(getClass().getResource("/index.html").toExternalForm());
     }
 
     public Object executeJavascript(String js) {
