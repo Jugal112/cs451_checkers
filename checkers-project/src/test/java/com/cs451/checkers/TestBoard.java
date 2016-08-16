@@ -16,6 +16,9 @@ public class TestBoard extends TestCase {
 				} else {
 					//System.out.print("-");
 					s+="-";
+					if(b[i][j] == null){
+						//System.out.println("Null @ "+ i + "," + j);
+					}
 				}
 				if(j == 7){
 					//System.out.println();
@@ -37,7 +40,7 @@ public class TestBoard extends TestCase {
 		assertEquals(strArr != null, true);
 		for (int i = 0; i < strArr.length; i++) {
 			for (int j = 0; j < strArr[i].length; j++) {
-				//assertTrue("inv".equals(strArr[i][j]) || "r".equals(strArr[i][j]) || "b".equals(strArr[i][j]));
+				assertTrue("inv".equals(strArr[i][j]) || "r".equals(strArr[i][j]) || "b".equals(strArr[i][j]));
 			}
 		}
 	}
