@@ -70,8 +70,8 @@ public class Board {
     }
 
     public Position between(Position p1, Position p2) {
-        int row = Math.abs(p2.getRow() - p1.getRow());
-        int column = Math.abs(p2.getColumn() - p1.getColumn());
+        int row = Math.abs((p2.getRow() + p1.getRow())/2);
+        int column = Math.abs((p2.getColumn() + p1.getColumn())/2);
         return new Position(row, column);
     }
 
