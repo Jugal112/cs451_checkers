@@ -12,7 +12,7 @@ public class HostWaitingThread extends Thread {
 		Platform.runLater(new Runnable() {
 		    @Override
 		    public void run() {
-		    	Main.browser.webEngine.executeScript("host_continue()");
+		    	Main.browser.webEngine.executeScript("hostContinue()");
 		    }
 		});
 	}
