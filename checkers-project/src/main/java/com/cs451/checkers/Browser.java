@@ -1,6 +1,7 @@
 package com.cs451.checkers;
 
 import java.net.URISyntaxException;
+import java.net.URL;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -28,7 +29,8 @@ class Browser extends Region {
 
         //load the web page
         //webEngine.load("file:/" + path + "/src/resources/index.html");
-        webEngine.load(getClass().getResource("/index.html").toExternalForm());
+        URL url = getClass().getResource("/index.html");
+        webEngine.load(url.toExternalForm());
     }
 
     public Object executeJavascript(String js) {
