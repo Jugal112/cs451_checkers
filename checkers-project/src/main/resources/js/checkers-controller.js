@@ -1,22 +1,38 @@
-checkersApp.controller('checkersController', function($scope, $sce) {	
-	setPaneSize();
-	
-	$( window ).resize(function() {
-		setPaneSize();
-	});
-	
-	$(document).on('click', '.column', function(){
-		if(selecting == true){
-			selecting = false;
-		}
-	});		
-	
-	$('.pane').append(generateBoard());
-	
-	$(document).ready(function(){
-		putPiecesOnBoard();
-	});
-	
+var turn;
+var color;
+
+//runs on entering checkerboard page
+checkersApp.controller('checkersController', function($scope, $sce) {
+	setupBoardUI();
+	setupPieceMovement();
+	setupGame();
+});
+
+
+// Functions for checkerboard controller
+
+function setupGame(){
+	$('.menu #text').text("Initializing...");
+	javaOp.initializeGame(networkingRole);
+}
+
+function startGame(c){
+	turn = Colors.BLACK;
+	color = Colors[c];
+	whoseTurn();
+}
+
+function whoseTurn(){
+	if(turn == color){
+		$('.menu #text').text("Your Turn");
+	}
+	else{
+		$('.menu #text').text("Opponent's Turn");
+	}
+}
+
+
+function setupPieceMovement(){
 	var selecting = false;
 	var selected = null;
 	$(document).on('click', '.piece', function(){
@@ -24,7 +40,7 @@ checkersApp.controller('checkersController', function($scope, $sce) {
 			var selecting = false;
 			var selected = null;
 		}
-
+	
 		if(selected != null && $(this).attr('id') == selected.attr('id')){
 			selecting = false;
 			selected = null;
@@ -44,10 +60,21 @@ checkersApp.controller('checkersController', function($scope, $sce) {
 			$('.selected').removeClass('selected');
 		}
 	});	
-});
-
-
-//functions specifically for checker board
+}
+	
+function setupBoardUI(){
+	setPaneSize();
+	
+	$( window ).resize(function() {
+		setPaneSize();
+	});
+	
+	$('.pane').append(generateBoard());
+	
+	$(document).ready(function(){
+		putPiecesOnBoard();
+	});
+}
 
 function putPiecesOnBoard(){
 	var pieces = JSON.parse(javaOp.getPieces());

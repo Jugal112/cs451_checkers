@@ -9,12 +9,14 @@ public class Main extends Application {
 	
 	public static Stage stage;
 	public static Browser browser;
+	public static GameManager gm;
 	
     @Override
     public void start(Stage primaryStage) {
         try {
             primaryStage.setTitle("Checkers");
             browser = new Browser();
+            gm = new GameManager();
             primaryStage.setScene(new Scene(browser, 800, 600));
             primaryStage.show();
         } catch (Exception e) {

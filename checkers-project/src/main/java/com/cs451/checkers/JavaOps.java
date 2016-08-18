@@ -9,14 +9,17 @@ import javafx.stage.Stage;
 
 import org.mortbay.util.ajax.JSON;
 
+import com.cs451.checkers.GameManager.Color;
+
 import java.net.*;
 import java.util.Enumeration;
+import java.util.function.Function;
 import java.util.logging.Logger;
 
 public class JavaOps {
     public static final int port = 5500;
     public static final Logger log = Logger.getGlobal();
-
+    
     public void debug(String p) {
         log.info(p);
     }
@@ -25,11 +28,59 @@ public class JavaOps {
         Platform.exit();
     }
 
+    public void initializeGame(String role){
+		GameManager gm = Main.gm;
+		System.out.println(role);
+		
+    	if(role.equals("HOST")){
+    		gm.initGame();
+    		
+    		Function<Integer, Integer> after = new Function<Integer, Integer>() {
+			@Override
+				public Integer apply(Integer t) {
+				// TODO Auto-generated method stub
+			        return gm.sendInitializationData(gm.player1);
+				}
+ 			};
+ 			
+ 			InitializationMessage im = new InitializationMessage();
+ 			im.set(gm.player1);
+ 			
+ 			SendMessageThread mt = new SendMessageThread(port, im, after);
+ 	    	mt.start();
+    	}
+    	else{
+  			
+  			InitializationMessage im = new InitializationMessage();
+  			im.set(gm.player1);
+    		Function<NetworkMessage, Integer> after = new Function<NetworkMessage, Integer>() {
+			@Override
+				public Integer apply(NetworkMessage t) {
+				// TODO Auto-generated method stub
+					InitializationMessage im = (InitializationMessage)t;
+					gm.initGame((Color) im.get());
+			        return gm.sendInitializationData(gm.player2);
+				}
+ 			};
+ 			
+ 			ReceiveMessageThread mt = new ReceiveMessageThread(port, after);
+  	    	mt.start();
+    	}
+    }
+    
+    public void sendMove(){
+    	
+    }
+    
+    public void waitForOpponent(){
+    	
+    }
+
     public void startHost() {
     	HostWaitingThread wt = new HostWaitingThread(port);
     	wt.start();
     }
-
+    
     public int startClient(String url) {
     	int ret = -1;
     	

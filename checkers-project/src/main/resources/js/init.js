@@ -1,4 +1,13 @@
 var checkersApp = angular.module('checkersApp', ['ngRoute', 'ngSanitize']);
+const Roles = {
+    HOST: 'HOST',
+    CLIENT: 'CLIENT',
+};
+const Colors = {
+	    RED: 'RED',
+	    BLACK: 'BLACK',
+	};
+var networkingRole;
 
 /*
  * configure routes

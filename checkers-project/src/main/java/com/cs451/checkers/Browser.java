@@ -2,7 +2,12 @@ package com.cs451.checkers;
 
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.concurrent.Callable;
+import java.util.function.Function;
 
+import com.cs451.checkers.GameManager.Color;
+
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Worker.State;
@@ -60,5 +65,48 @@ class Browser extends Region {
         double w = getWidth();
         double h = getHeight();
         layoutInArea(browser, 0, 0, w, h, 0, HPos.CENTER, VPos.CENTER);
+    }
+    
+    public void hostContinue(){
+		Function<Object, Integer> hc = new Function<Object, Integer>() {
+			@Override
+			public Integer apply(Object t) {
+				// TODO Auto-generated method stub
+				return (Integer) webEngine.executeScript("hostContinue()");
+			}
+		};
+			
+		runTask(hc, null);
+    }
+    
+    public int setInitialization(Color color){
+    	String c;
+    	
+    	if(color == Color.BLACK){
+    		c = "BLACK";
+    	}
+    	else{
+    		c = "RED";
+    	}
+    	
+		Function<Object, Integer> hc = new Function<Object, Integer>() {
+			@Override
+			public Integer apply(Object t) {
+				// TODO Auto-generated method stub
+				return (Integer) webEngine.executeScript("startGame('" + c + "')");
+			}
+		};
+			
+		runTask(hc, null);
+    	return 0;
+    }
+    
+    public void runTask(Function<Object, Integer> task, Object param){
+		Platform.runLater(new Runnable() {
+		    @Override
+		    public void run() {
+				task.apply(param);
+		    }
+		});
     }
 }
