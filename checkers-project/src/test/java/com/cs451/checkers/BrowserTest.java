@@ -65,7 +65,7 @@ public class BrowserTest extends TestCase {
 	public void testAddListenerAfterLoad() {
 		// fail("Not yet implemented");
 	}
-
+/*
 	public void testHostContinue() {
 		Thread thread = new Thread(new Runnable() {
 
@@ -92,7 +92,7 @@ public class BrowserTest extends TestCase {
 			e.printStackTrace();
 		}
 	}
-
+*/
 	public void testSetInitialization() {
 		Thread thread = new Thread(new Runnable() {
 
