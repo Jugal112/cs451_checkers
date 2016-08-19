@@ -1,8 +1,9 @@
-checkersApp.controller('menuController', function($scope) {
+checkersApp.controller('menuController', ['$scope', '$state',
+                                          function($scope, $state) {
 	$("#host").click(function(){
-		window.location.href = '#host'
+		$state.go('/host');
 	});
 	$("#join").click(function(){
-		window.location.href = '#client'
+		$state.go('/client');
 	});
-});
+}]);
