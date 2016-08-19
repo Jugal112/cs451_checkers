@@ -11,6 +11,26 @@ checkersApp.controller('checkersController', function($scope, $sce) {
 
 // Functions for checkerboard controller
 
+function setWinner(winner){
+	turn == null;
+
+	if(winner == color){
+		$('.menu #text').text("YOU WIN!");
+	}
+	else{
+		$('.menu #text').text("YOU LOSE!");
+	}
+}
+
+function setTurn(t){
+	turn = t;
+	whoseTurn();
+}
+
+function kingMe(squareId){
+	$("#" + squareId).find(".piece").addClass('king');
+}
+
 function setupGame(){
 	$('.menu #text').text("Initializing...");
 	javaOp.initializeGame(networkingRole);
@@ -31,26 +51,28 @@ function whoseTurn(){
 	}
 }
 
-
 function setupPieceMovement(){
 	var selecting = false;
 	var selected = null;
 	$(document).on('click', '.piece', function(){
-		if($(".selected").length == 0){
-			var selecting = false;
-			var selected = null;
-		}
-	
-		if(selected != null && $(this).attr('id') == selected.attr('id')){
-			selecting = false;
-			selected = null;
-			$(this).removeClass('selected');
-		}
-		else{
-			selecting = true;
-			$('.selected').removeClass('selected');
-			$(this).addClass('selected');
-			selected = $(this);
+		console.log(color);
+		if(turn == color && $(this).hasClass(color.toLowerCase())){
+			if($(".selected").length == 0){
+				var selecting = false;
+				var selected = null;
+			}
+		
+			if(selected != null && $(this).attr('id') == selected.attr('id')){
+				selecting = false;
+				selected = null;
+				$(this).removeClass('selected');
+			}
+			else{
+				selecting = true;
+				$('.selected').removeClass('selected');
+				$(this).addClass('selected');
+				selected = $(this);
+			}
 		}
 	});
 	
