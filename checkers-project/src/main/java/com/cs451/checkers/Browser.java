@@ -24,7 +24,6 @@ class Browser extends Region {
     final WebEngine webEngine = browser.getEngine();
 
     public Browser() throws URISyntaxException {
-        String path = System.getProperty("user.dir");
         //add the web view to the scene
         getChildren().add(browser);
 

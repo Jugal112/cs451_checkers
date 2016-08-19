@@ -38,8 +38,7 @@ public class KingTest extends TestCase {
 	public void testToString() {
 		redKing = new King("r");
 		blackKing = new King("b");
-
-		assertTrue("rk".equals(redKing.getColor()));
-		assertTrue("bk".equals(blackKing.getColor()));
+		assertTrue("rK".equals(redKing.toString()));
+		assertTrue("bK".equals(blackKing.toString()));
 	}
 }

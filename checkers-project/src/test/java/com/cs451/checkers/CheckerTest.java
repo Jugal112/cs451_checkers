@@ -43,5 +43,12 @@ public class CheckerTest extends TestCase {
 		assertTrue("r".equals(redChecker.getColor()));
 		assertTrue("b".equals(blackChecker.getColor()));
 	}
+	
+	public void testIsOpponent(){
+		assertTrue(new Checker("r").isOpponent(new Checker("b")));
+		assertTrue(new Checker("b").isOpponent(new Checker("r")));
+		assertFalse(new Checker("r").isOpponent(new Checker("r")));
+		assertFalse(new Checker("b").isOpponent(new Checker("b")));
+	}
 
 }
