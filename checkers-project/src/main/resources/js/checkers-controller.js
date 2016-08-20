@@ -167,6 +167,10 @@ function removePiece(id, color){
 	$("." + color + " #"+id).remove();
 }
 
+function emptySquare(id) {
+    getSquare(squareId).empty();
+}
+
 function generateBoard(){
 	var board = "";
 	var alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
