@@ -127,6 +127,9 @@ function putPiecesOnBoard(){
 	var squareId;
 	var bcount = 0;
 	var rcount = 0;
+
+        $("[id^=red]").remove();
+	$("[id^=black]").remove();
 	
 	for(row in pieces){
 		for(column in pieces[row]){
