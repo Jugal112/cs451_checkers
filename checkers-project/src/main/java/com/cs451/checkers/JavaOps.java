@@ -147,11 +147,11 @@ public class JavaOps {
     }
 
     public String getPieces() {
-//        Main.gm.board.movePiece(new Position(0, 1), new Position(4, 1), false);
-//        ArrayList<Move> moves = Main.gm.board.getValidMoves();
-//        for (Move m : moves) {
-//            System.out.println(m.toString());
-//        }
+        //Main.gm.board.movePiece(new Position(0, 1), new Position(4, 1), false);
+        ArrayList<Move> moves = Main.gm.board.getValidMoves();
+        for (Move m : moves) {
+            System.out.println(m.toString());
+        }
         String[][] pieces = Main.gm.board.toStringArray();
         return JSON.toString(pieces);
     }
