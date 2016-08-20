@@ -46,8 +46,8 @@ function startGame(c){
 	turn = Colors.BLACK;
 	color = Colors[c];
 	whoseTurn();
-        if(turn != color()){
-           log.console("About to start waiting for opponent turn!");
+        if(turn != color){
+           console.log("About to start waiting for opponent turn!");
            javaOp.waitForOpponent();
 	}
 }
