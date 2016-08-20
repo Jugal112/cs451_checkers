@@ -1,6 +1,9 @@
 package com.cs451.checkers;
 
 import junit.framework.TestCase;
+
+import java.util.ArrayList;
+
 import com.cs451.checkers.Board;
 
 public class TestBoard extends TestCase {
@@ -143,6 +146,35 @@ public class TestBoard extends TestCase {
 		for (int i = 0; i < b.length; i++) {
 			assertTrue(b[i].length == 8);
 		}
+	}
+	
+	public void testGetRegularMoves(){
+		testBoard = new Board();
+		testBoard.movePiece(new Position(2,1), new Position(3,2), false);
+		testBoard.killPiece(new Position(3,2));
+		testBoard.killPiece(new Position(2,3));
+		testBoard.setPiece(new Position(3, 2), new King("b"));
+		//System.out.println(displayBoardArr(testBoard.toStringArray()));
+		ArrayList<Move> m = testBoard.getRegularMoves(new Position(3,2));
+		assertTrue(m.size() == 4);
+	}
+	
+	public void testAddJumps(){
+		testBoard = new Board();
+		testBoard.setPiece(new Position(3, 2), new King("r"));
+		testBoard.movePiece(new Position(5,4), new Position(4,3), false);
+		testBoard.movePiece(new Position(5,2), new Position(4,1), false);
+		testBoard.killPiece(new Position(5,0));
+		testBoard.killPiece(new Position(2,5));
+		for(int i = 0; i < testBoard.toStringArray()[1].length; i++){
+			testBoard.killPiece(new Position(1,i));
+			testBoard.killPiece(new Position(2,i));
+		}
+		testBoard.setPiece(new Position(2, 1), new Checker("b"));
+		testBoard.setPiece(new Position(2, 3), new Checker("b"));
+		testBoard.setPiece(new Position(3, 2), new King("r"));
+		System.out.println(displayBoardArr(testBoard.toStringArray()));
+		testBoard.addJumps(testBoard.getJumpMoves(new Position(3,2)), testBoard.getJumpMoves(new Position(3,2)).get(0), 1, null);
 	}
 
 }
