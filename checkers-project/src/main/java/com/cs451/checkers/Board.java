@@ -181,7 +181,7 @@ public class Board {
     }
 
     public void makeMove(Move move) {
-        for (int i = 0; i < move.getMove().size(); i++) {
+        for (int i = 0; i < move.getMove().size()-1; i++) {
             movePiece(move.getMove().get(i), move.getMove().get(i+1), move.getIsAttack());
         }
     }
