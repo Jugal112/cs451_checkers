@@ -37,6 +37,10 @@ public class TestBoard extends TestCase {
 		testBoard = null;
 		testBoard = new Board();
 		assertEquals(testBoard == null, false);
+		for(int i = 0; i < 7; i++){
+			assertTrue(testBoard.getPiece(3,i) == null);
+			assertTrue(testBoard.getPiece(4,i) == null);
+		}
 	}
 
 	public void testToStringArray() {
