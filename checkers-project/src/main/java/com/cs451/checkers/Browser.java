@@ -92,7 +92,8 @@ class Browser extends Region {
 			@Override
 			public Integer apply(Object t) {
 				// TODO Auto-generated method stub
-				return (Integer) webEngine.executeScript("startGame('" + c + "')");
+				webEngine.executeScript("startGame('" + c + "')");
+                return 0;
 			}
 		};
 			

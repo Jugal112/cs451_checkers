@@ -68,6 +68,6 @@ public class Position implements Serializable{
     }
 
     public String toString() {
-        return String.format("(%s, %s)", (char) row+97, column);
+        return String.format("(%s, %s)", Character.toString((char) (row+97)), column);
     }
 }

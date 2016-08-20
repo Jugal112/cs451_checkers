@@ -37,10 +37,26 @@ public class Board {
         return pieces_str;
     }
 
-    public ArrayList<Move> getValidMoves(Position pos) {
+    public ArrayList<Move> getValidMoves() {
         ArrayList<Move> moves = new ArrayList<Move>();
-        moves.addAll(getRegularMoves(pos));
-        moves.addAll(getJumpMoves(pos));
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                if ((i + j) % 2 == 1) {
+                    Position pos = new Position(i, j);
+                    moves.addAll(getJumpMoves(pos));
+                }
+            }
+        }
+        if (moves.isEmpty()) {
+            for (int i = 0; i < 8; i++) {
+                for (int j = 0; j < 8; j++) {
+                    if ((i + j) % 2 == 1) {
+                        Position pos = new Position(i, j);
+                        moves.addAll(getRegularMoves(pos));
+                    }
+                }
+            }
+        }
         return moves;
     }
 
@@ -82,22 +98,22 @@ public class Board {
                     moves.add(move);
                 }
             }
-            return moves;
-        } else {
-            return null;
         }
+        return moves;
     }
 
     public ArrayList<Move> getJumpMoves(Position pos) {
         ArrayList<Move> jumps = new ArrayList<Move>();
         Checker checker = getPiece(pos);
-        int direction = 1;
-        if (checker.getColor().equals("b")) {
-            direction = -1;
+        if (checker != null) {
+            int direction = 1;
+            if (checker.getColor().equals("b")) {
+                direction = -1;
+            }
+            Move move = new Move();
+            move.add(pos);
+            addJumps(jumps, move, direction, checker);
         }
-        Move move = new Move();
-        move.add(pos);
-        addJumps(jumps, move, direction, checker);
         return jumps;
     }
 
@@ -150,7 +166,7 @@ public class Board {
                 }
             }
         }
-        if (endMove) {
+        if (endMove && move.getMove().size()>1) {
             move.isAttack();
             jumps.add(move);
         }
@@ -194,7 +210,7 @@ public class Board {
     }
 
     public boolean isValid(Position pos) {
-        if (pos.getColumn() <= 8 && pos.getColumn() >= 0 && pos.getRow() >= 0 && pos.getRow() <= 8) {
+        if (pos.getColumn() < 8 && pos.getColumn() >= 0 && pos.getRow() >= 0 && pos.getRow() < 8) {
             return true;
         }
         return false;
