@@ -27,8 +27,35 @@ public class Move {
     private ArrayList<Position> move;
     private boolean isAttack = false;
 
-    public Move() {
-        move = new ArrayList<Position>();
+    public void add(Position pos) {
+        move.add(pos);
     }
 
+    public Position getLastPosition() {
+        return move.get(move.size()-1);
+    }
+
+    public Move() {
+        move = new ArrayList<Position>();
+
+    }
+
+    public Move(Move other) {
+        move = new ArrayList<Position>();
+        for (Position p: other.getMove()) {
+            add(p);
+        }
+    }
+
+    public String toString() {
+        String s = "";
+        for (Position p: getMove()) {
+            s += p.toString() + " ";
+        }
+        String result = String.format("[ %s ] ", s);
+        if (isAttack) {
+            result += "ATTACK";
+        }
+        return result;
+    }
 }

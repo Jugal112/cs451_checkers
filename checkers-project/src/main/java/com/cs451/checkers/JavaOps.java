@@ -12,6 +12,7 @@ import org.mortbay.util.ajax.JSON;
 import com.cs451.checkers.GameManager.Color;
 
 import java.net.*;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.function.Function;
 import java.util.logging.Logger;
@@ -139,6 +140,11 @@ public class JavaOps {
 
     public String getPieces() {
         Board board = new Board();
+        board.movePiece(new Position(5, 0), new Position(3, 2), false);
+        ArrayList<Move> moves = board.getJumpMoves(new Position(2,3));
+        for (Move m : moves) {
+            System.out.println(m.toString());
+        }
         String[][] pieces = board.toStringArray();
         return JSON.toString(pieces);
     }

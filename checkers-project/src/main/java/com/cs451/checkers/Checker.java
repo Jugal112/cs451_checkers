@@ -19,7 +19,10 @@ public class Checker {
     }
 
     public boolean isOpponent (Checker checker) {
-        if (this.color.equals(checker.getColor())) {
+        if (checker == null) {
+            return false;
+        }
+        else if (this.color.equals(checker.getColor())) {
             return false;
         }
         return true;

@@ -30,31 +30,19 @@ public class Position {
     }
 
     public Position frontLeft(int direction) {
-        if (getColumn()-1 >= 0 && getRow()+direction >= 0 && getRow()+direction <= 8) {
-            return new Position (this.getRow()+direction, this.getColumn()-1);
-        }
-        return null;
+        return new Position (this.getRow()+direction, this.getColumn()-1);
     }
 
     public Position frontRight(int direction) {
-        if (getColumn()+1 <= 8 && getRow()+direction >= 0 && getRow()+direction <= 8) {
-            return new Position (this.getRow()+direction, this.getColumn()+1);
-        }
-        return null;
+        return new Position (this.getRow()+direction, this.getColumn()+1);
     }
 
     public Position backLeft(int direction) {
-        if (getColumn()-1 >= 0 && getRow()-direction >= 0 && getRow()-direction <= 8) {
-            return new Position (this.getRow()-direction, this.getColumn()-1);
-        }
-        return null;
+        return new Position (this.getRow()-direction, this.getColumn()-1);
     }
 
     public Position backRight(int direction) {
-        if (getColumn()+1 <= 8 && getRow()-direction >= 0 && getRow()-direction <= 8) {
-            return new Position (this.getRow()-direction, this.getColumn()+1);
-        }
-        return null;
+        return new Position (this.getRow()-direction, this.getColumn()+1);
     }
 
     @Override
@@ -70,5 +58,9 @@ public class Position {
             return true;
         }
         return false;
+    }
+
+    public String toString() {
+        return String.format("(%s, %s)", row, column);
     }
 }

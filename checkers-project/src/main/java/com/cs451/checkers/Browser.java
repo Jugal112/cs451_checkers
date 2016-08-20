@@ -80,7 +80,7 @@ class Browser extends Region {
     }
     
     public int setInitialization(Color color){
-    	String c;
+    	final String c;
     	
     	if(color == Color.BLACK){
     		c = "BLACK";
@@ -101,7 +101,7 @@ class Browser extends Region {
     	return 0;
     }
     
-    public void runTask(Function<Object, Integer> task, Object param){
+    public void runTask(final Function<Object, Integer> task, final Object param){
 		Platform.runLater(new Runnable() {
 		    @Override
 		    public void run() {
