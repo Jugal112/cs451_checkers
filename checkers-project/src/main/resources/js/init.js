@@ -1,4 +1,3 @@
-var checkersApp = angular.module('checkersApp', ['ngRoute', 'ngSanitize']);
 const Roles = {
     HOST: 'HOST',
     CLIENT: 'CLIENT',
@@ -13,25 +12,43 @@ var networkingRole;
  * configure routes
  * handles controller configuration and template routing
 */
-checkersApp.config(function($routeProvider) {
-    $routeProvider
-        .when('/', {
+
+var checkersApp = angular.module('checkersApp', ['ui.router'])
+.config(
+  [          '$stateProvider', '$urlRouterProvider',
+    function ($stateProvider,   $urlRouterProvider) {
+	$urlRouterProvider.otherwise('/menu');
+
+	$stateProvider
+        .state('/menu', {
             templateUrl : 'pages/menu.html',
-            controller  : 'menuController'
+            controller  : 'menuController',
+            url : '/menu'
         })
 
-        .when('/host', {
+        .state('/host', {
             templateUrl : 'pages/host.html',
-            controller  : 'hostController'
+            controller  : 'hostController',
+            url : '/host'
         })
 
-        .when('/client', {
+        .state('/client', {
             templateUrl : 'pages/client.html',
-            controller  : 'clientController'
+            controller  : 'clientController',
+            url : '/client'
         })
 
-		.when('/checkers', {
+		.state('/checkers', {
 		    templateUrl : 'pages/checkers.html',
-		    controller  : 'checkersController'
+		    controller  : 'checkersController',
+            url : '/checkers'
 		});
-});
+}]);
+
+checkersApp.controller("mainController", ['$scope', '$state',
+                                            function($scope, $state) {
+	$scope.changeState = function (state) {
+		console.log("changing the state!");
+	    $state.go(state);
+	};
+}]);
