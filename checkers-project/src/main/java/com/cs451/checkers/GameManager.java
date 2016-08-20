@@ -1,10 +1,16 @@
 package com.cs451.checkers;
 
 import java.util.Random;
+import java.util.function.Function;
+
+import com.cs451.checkers.GameManager.Color;
+
+import javafx.application.Platform;
 
 public class GameManager {
 	enum Color {RED, BLACK};
 	enum Player {PLAYER1, PLAYER2};
+	public static final int port = 5500;
 	
 	Player playerNum;
 	Color player1; //host
@@ -12,11 +18,15 @@ public class GameManager {
 	Color currentPlayer;
 	Board board;
 	
+	public GameManager() {
+		board = new Board();
+	}
+	
 	public void initGame(){
 		board = new Board();
 		if(player1 == null){
 			Random rand = new Random();
-			int  n = rand.nextInt(1);
+			int  n = rand.nextInt(2);
 			if(n == 1){
 				player1 = Color.BLACK;
 				player2 = Color.RED;
@@ -47,12 +57,38 @@ public class GameManager {
 		return 0;
 	}
 	
-	public void makeMove(){
-		
+	public void makeMove(Move move){
+		board.makeMove(move);
+		NormalNetworkManager.getInstance().sendMessage(new MoveNetworkMessage(move));
+		Platform.runLater(new Runnable() {
+		      @Override
+			  public void run() {
+			     	Main.browser.webEngine.executeScript("switchTurn()");
+			  }
+			});
 	}
 	
 	public void waitForOpponent(){
-		
+		Function<NetworkMessage, Integer> after = new Function<NetworkMessage, Integer>() {
+			@Override
+				public Integer apply(NetworkMessage t) {
+				// TODO Auto-generated method stub
+					if(t.getType() == MoveNetworkMessage.class) {
+						Move move = (Move)t.get();
+						board.makeMove(move);
+						Platform.runLater(new Runnable() {
+					      @Override
+						  public void run() {
+						     	Main.browser.webEngine.executeScript("putPiecesOnBoard()");
+						     	Main.browser.webEngine.executeScript("switchTurn()");
+						  }
+						});
+					}
+					return 1;
+				}
+ 			};
+ 		ReceiveMessageThread t = new ReceiveMessageThread(port, after);
+ 		t.start();
 	}
 	
 	public void checkGameState(){

@@ -1,6 +1,7 @@
 var turn;
 var color;
 
+
 //runs on entering checkerboard page
 checkersApp.controller('checkersController', function($scope, $sce) {
 	setupBoardUI();
@@ -25,10 +26,16 @@ function setWinner(winner){
 }
 
 function setTurn(t){
+        console.log("Turn: " + turn);
 	turn = t;
 	whoseTurn();
 }
 
+function switchTurn(){
+        if(turn == Colors.RED) turn = Colors.BLACK;
+        else turn = Colors.RED;
+        whoseTurn();
+}
 function warn(message){
 	$("#warn").text(message);
 }
@@ -46,6 +53,10 @@ function startGame(c){
 	turn = Colors.BLACK;
 	color = Colors[c];
 	whoseTurn();
+        if(turn != color){
+           console.log("About to start waiting for opponent turn!");
+           
+	}
 }
 
 function whoseTurn(){
@@ -54,6 +65,7 @@ function whoseTurn(){
 	}
 	else{
 		$('.menu #text').text("Opponent's Turn");
+                javaOp.waitForOpponent();
 	}
 }
 
@@ -64,24 +76,29 @@ function warn(){
 function setupPieceMovement(){
 	var selecting = false;
 	var selected = null;
+        var orig_pos = null;
 	$(document).on('click', '.piece', function(){
 		console.log(color);
 		if(turn == color && $(this).hasClass(color.toLowerCase())){
 			if($(".selected").length == 0){
 				var selecting = false;
 				var selected = null;
+				orig_pos = null;
 			}
 		
 			if(selected != null && $(this).attr('id') == selected.attr('id')){
 				selecting = false;
 				selected = null;
 				$(this).removeClass('selected');
+				orig_pos = null;
 			}
 			else{
 				selecting = true;
 				$('.selected').removeClass('selected');
 				$(this).addClass('selected');
 				selected = $(this);
+				orig_pos = $(this).parent().attr('id');
+                                console.log(orig_pos)
 			}
 		}
 	});
@@ -89,6 +106,8 @@ function setupPieceMovement(){
 	$(document).on('click', '.column', function(){
 		if($('.selected').length && $(this).children('.piece').length == 0){
 			movePiece($('.selected').attr('id'), $(this).attr('id'))
+                        javaOp.debug(orig_pos + " " + $(this).attr('id'));
+                        javaOp.sendMove(orig_pos + " " + $(this).attr('id'));
 			$('.selected').removeClass('selected');
 		}
 	});	
@@ -109,12 +128,16 @@ function setupBoardUI(){
 }
 
 function putPiecesOnBoard(){
+        console.log("putPiecesOnBoard");
 	var pieces = JSON.parse(javaOp.getPieces());
 	var alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
 	var color;
 	var squareId;
 	var bcount = 0;
 	var rcount = 0;
+
+        $("[id^=red]").remove();
+	$("[id^=black]").remove();
 	
 	for(row in pieces){
 		for(column in pieces[row]){
@@ -153,6 +176,10 @@ function createPiece(id, color, squareId){
 
 function removePiece(id, color){
 	$("." + color + " #"+id).remove();
+}
+
+function emptySquare(id) {
+    getSquare(squareId).empty();
 }
 
 function generateBoard(){
