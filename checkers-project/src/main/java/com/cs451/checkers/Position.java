@@ -29,6 +29,11 @@ public class Position {
         this.column = j;
     }
 
+    public Position(String pos) {
+        this.row = pos.charAt(0)-97;
+        this.column = Character.getNumericValue(pos.charAt(1));
+    }
+
     public Position frontLeft(int direction) {
         return new Position (this.getRow()+direction, this.getColumn()-1);
     }
@@ -61,6 +66,6 @@ public class Position {
     }
 
     public String toString() {
-        return String.format("(%s, %s)", row, column);
+        return String.format("(%s, %s)", (char) row+97, column);
     }
 }

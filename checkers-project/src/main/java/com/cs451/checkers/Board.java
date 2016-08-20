@@ -37,6 +37,13 @@ public class Board {
         return pieces_str;
     }
 
+    public ArrayList<Move> getValidMoves(Position pos) {
+        ArrayList<Move> moves = new ArrayList<Move>();
+        moves.addAll(getRegularMoves(pos));
+        moves.addAll(getJumpMoves(pos));
+        return moves;
+    }
+
     public ArrayList<Move> getRegularMoves(Position pos) {
         ArrayList<Move> moves = new ArrayList<Move>();
         Checker checker = getPiece(pos);

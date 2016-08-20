@@ -141,7 +141,7 @@ public class JavaOps {
     public String getPieces() {
         Board board = new Board();
         board.movePiece(new Position(5, 0), new Position(3, 2), false);
-        ArrayList<Move> moves = board.getJumpMoves(new Position(2,3));
+        ArrayList<Move> moves = board.getValidMoves(new Position(2,3));
         for (Move m : moves) {
             System.out.println(m.toString());
         }
