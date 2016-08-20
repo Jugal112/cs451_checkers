@@ -20,11 +20,17 @@ function setWinner(winner){
 	else{
 		$('.menu #text').text("YOU LOSE!");
 	}
+	
+	$(".menu #playAgain").show();
 }
 
 function setTurn(t){
 	turn = t;
 	whoseTurn();
+}
+
+function warn(message){
+	$("#warn").text(message);
 }
 
 function kingMe(squareId){
@@ -49,6 +55,10 @@ function whoseTurn(){
 	else{
 		$('.menu #text').text("Opponent's Turn");
 	}
+}
+
+function warn(){
+	
 }
 
 function setupPieceMovement(){
