@@ -1,6 +1,7 @@
 var turn;
 var color;
 
+
 //runs on entering checkerboard page
 checkersApp.controller('checkersController', function($scope, $sce) {
 	setupBoardUI();
@@ -25,10 +26,16 @@ function setWinner(winner){
 }
 
 function setTurn(t){
+        console.log("Turn: " + turn);
 	turn = t;
 	whoseTurn();
 }
 
+function switchTurn(){
+        if(turn == Colors.RED) turn = Colors.BLACK;
+        else turn = Colors.RED;
+        whoseTurn();
+}
 function warn(message){
 	$("#warn").text(message);
 }
@@ -48,7 +55,7 @@ function startGame(c){
 	whoseTurn();
         if(turn != color){
            console.log("About to start waiting for opponent turn!");
-           javaOp.waitForOpponent();
+           
 	}
 }
 
@@ -58,6 +65,7 @@ function whoseTurn(){
 	}
 	else{
 		$('.menu #text').text("Opponent's Turn");
+                javaOp.waitForOpponent();
 	}
 }
 

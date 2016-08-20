@@ -20,7 +20,6 @@ import java.util.logging.Logger;
 public class JavaOps {
     public static final int port = 5500;
     public static final Logger log = Logger.getGlobal();
-    public Board board = new Board();
     
     public void debug(String p) {
         log.info(p);
@@ -82,25 +81,8 @@ public class JavaOps {
     
     public void waitForOpponent(){
     	log.info("Waiting for opponent move!");
-    	Function<NetworkMessage, Integer> after = new Function<NetworkMessage, Integer>() {
-			@Override
-				public Integer apply(NetworkMessage t) {
-				// TODO Auto-generated method stub
-					if(t.getType() == MoveNetworkMessage.class) {
-						Move move = (Move)t.get();
-						board.makeMove(move);
-						Platform.runLater(new Runnable() {
-					      @Override
-						  public void run() {
-						     	Main.browser.webEngine.executeScript("putPiecesOnBoard()");
-						  }
-						});
-					}
-					return 1;
-				}
- 			};
- 		ReceiveMessageThread t = new ReceiveMessageThread(port, after);
- 		t.start();
+    	GameManager gm = Main.gm;
+    	gm.waitForOpponent();
     }
 
     public void startHost() {
@@ -170,7 +152,7 @@ public class JavaOps {
         /*for (Move m : moves) {
             System.out.println(m.toString());
         }*/
-        String[][] pieces = board.toStringArray();
+        String[][] pieces = Main.gm.board.toStringArray();
         return JSON.toString(pieces);
     }
 }
