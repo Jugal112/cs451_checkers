@@ -115,7 +115,7 @@ public class JavaOpsTest extends TestCase {
 		});
 		thread.start();
 		try {
-			Thread.sleep(1000);
+			Thread.sleep(2000);
 			j.exit();
 		} catch (InterruptedException e) {
 
@@ -142,7 +142,7 @@ public class JavaOpsTest extends TestCase {
 		});
 		thread.start();
 		try {
-			Thread.sleep(1000);
+			Thread.sleep(2000);
 			j.exit();
 		} catch (InterruptedException e) {
 
