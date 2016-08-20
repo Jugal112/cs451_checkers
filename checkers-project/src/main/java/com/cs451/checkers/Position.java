@@ -1,9 +1,11 @@
 package com.cs451.checkers;
 
+import java.io.Serializable;
+
 /**
  * Created by jugal on 8/15/2016.
  */
-public class Position {
+public class Position implements Serializable{
     private int row;
 
     public int getRow() {

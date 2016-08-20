@@ -1,6 +1,9 @@
 package com.cs451.checkers;
 
 import java.util.Random;
+import java.util.function.Function;
+
+import com.cs451.checkers.GameManager.Color;
 
 public class GameManager {
 	enum Color {RED, BLACK};
@@ -16,7 +19,7 @@ public class GameManager {
 		board = new Board();
 		if(player1 == null){
 			Random rand = new Random();
-			int  n = rand.nextInt(1);
+			int  n = rand.nextInt(2);
 			if(n == 1){
 				player1 = Color.BLACK;
 				player2 = Color.RED;
@@ -47,8 +50,8 @@ public class GameManager {
 		return 0;
 	}
 	
-	public void makeMove(){
-		
+	public void makeMove(Move move){
+		NormalNetworkManager.getInstance().sendMessage(new MoveNetworkMessage(move));	
 	}
 	
 	public void waitForOpponent(){

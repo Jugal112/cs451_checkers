@@ -20,6 +20,7 @@ import java.util.logging.Logger;
 public class JavaOps {
     public static final int port = 5500;
     public static final Logger log = Logger.getGlobal();
+    public Board board = new Board();
     
     public void debug(String p) {
         log.info(p);
@@ -58,6 +59,7 @@ public class JavaOps {
 			@Override
 				public Integer apply(NetworkMessage t) {
 				// TODO Auto-generated method stub
+				    log.info("Initialized message received over network! WOOHOO!");
 					InitializationMessage im = (InitializationMessage)t;
 					gm.initGame((Color) im.get());
 			        return gm.sendInitializationData(gm.player2);
@@ -69,12 +71,36 @@ public class JavaOps {
     	}
     }
     
-    public void sendMove(){
-    	
+    public void sendMove(String m){
+    	GameManager gm = Main.gm;
+    	String[] smove = m.split(" ");
+    	Move move = new Move();
+    	move.add(new Position(smove[0]));
+    	move.add(new Position(smove[1]));
+    	gm.makeMove(move);
     }
     
     public void waitForOpponent(){
-    	
+    	log.info("Waiting for opponent move!");
+    	Function<NetworkMessage, Integer> after = new Function<NetworkMessage, Integer>() {
+			@Override
+				public Integer apply(NetworkMessage t) {
+				// TODO Auto-generated method stub
+					if(t.getType() == MoveNetworkMessage.class) {
+						Move move = (Move)t.get();
+						board.makeMove(move);
+						Platform.runLater(new Runnable() {
+					      @Override
+						  public void run() {
+						     	Main.browser.webEngine.executeScript("putPiecesOnBoard()");
+						  }
+						});
+					}
+					return 1;
+				}
+ 			};
+ 		ReceiveMessageThread t = new ReceiveMessageThread(port, after);
+ 		t.start();
     }
 
     public void startHost() {
@@ -140,11 +166,11 @@ public class JavaOps {
 
     public String getPieces() {
         Board board = new Board();
-        board.movePiece(new Position(5, 0), new Position(3, 2), false);
-        ArrayList<Move> moves = board.getValidMoves(new Position(2,3));
-        for (Move m : moves) {
+        //board.movePiece(new Position(5, 0), new Position(3, 2), false);
+        //ArrayList<Move> moves = board.getValidMoves(new Position(2,3));
+        /*for (Move m : moves) {
             System.out.println(m.toString());
-        }
+        }*/
         String[][] pieces = board.toStringArray();
         return JSON.toString(pieces);
     }

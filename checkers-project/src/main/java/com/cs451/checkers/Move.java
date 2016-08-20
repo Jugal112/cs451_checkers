@@ -1,12 +1,13 @@
 package com.cs451.checkers;
 
+import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
  * Created by jugal on 8/15/2016.
  */
-public class Move {
+public class Move implements Serializable{
     public ArrayList<Position> getMove() {
         return move;
     }
