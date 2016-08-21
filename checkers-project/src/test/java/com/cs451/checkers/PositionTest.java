@@ -64,6 +64,6 @@ public class PositionTest extends TestCase {
 	}
 
 	public void testToString() {
-		assertTrue(new Position(2,2).toString().equals("(2, 2)"));
+		assertTrue(new Position(2,2).toString().equals("(c, 2)"));
 	}
 }
