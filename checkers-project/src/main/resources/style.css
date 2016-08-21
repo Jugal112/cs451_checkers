@@ -249,3 +249,25 @@ body{
 	border-color:#5FA147;
 	border-width:4px !important;
 }
+.confetti{
+	position:absolute;
+}
+#winner{
+	position:absolute;
+	text-align: center;
+	vertical-align: middle;
+	display: none;
+	top: 45%;
+	left:30%;
+	color:white;
+	font-family:arial;
+	font-weight:bolder;
+	font-size: 50px;
+	text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+.trail{
+	position: relative;
+    top: 50%;
+    left: 50%;
+    height:5px;
+}
