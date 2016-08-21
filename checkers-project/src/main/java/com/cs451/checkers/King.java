@@ -14,6 +14,6 @@ public class King extends Checker{
     }
 
     public String toString() {
-        return this.color+"_KING";
+        return this.color.toString()+"_KING";
     }
 }

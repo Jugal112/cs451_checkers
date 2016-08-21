@@ -61,14 +61,28 @@ public class GameManager {
 	}
 
 	public void makeMove(Move move){
-		board.makeMove(move);
-		NormalNetworkManager.getInstance().sendMessage(new MoveNetworkMessage(move));
-		Platform.runLater(new Runnable() {
-		      @Override
-			  public void run() {
-			     	Main.browser.webEngine.executeScript("switchTurn()");
-			  }
+		System.out.println("making move "+move.toString());
+		System.out.println(getValidMoves().contains(move));
+		if (getValidMoves().contains(move)) {
+			Move theRealMove = getValidMoves().get(getValidMoves().indexOf(move));
+			board.makeMove(theRealMove);
+			NormalNetworkManager.getInstance().sendMessage(new MoveNetworkMessage(theRealMove));
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					Main.browser.webEngine.executeScript("switchTurn()");
+					Main.browser.webEngine.executeScript("putPiecesOnBoard()");
+				}
 			});
+		}
+		else {
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					Main.browser.webEngine.executeScript("putPiecesOnBoard()");
+				}
+			});
+		}
 	}
 	
 	public void waitForOpponent(){

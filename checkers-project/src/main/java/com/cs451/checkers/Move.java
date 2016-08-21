@@ -59,4 +59,20 @@ public class Move implements Serializable{
         }
         return result;
     }
+
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (!Move.class.isAssignableFrom(obj.getClass())) {
+            return false;
+        }
+        final Move other = (Move) obj;
+        for (int i = 0; i < move.size(); i++) {
+            if (!move.get(i).equals(other.getMove().get(i))) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

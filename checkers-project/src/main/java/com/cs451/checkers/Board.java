@@ -64,7 +64,6 @@ public class Board {
     public ArrayList<Move> getRegularMoves(Position pos, Color color) {
         ArrayList<Move> moves = new ArrayList<Move>();
         Checker checker = getPiece(pos);
-        System.out.println(color);
         if (checker instanceof Checker && checker.getColor() == color) {
             int direction = 1;
             if (checker.getColor().equals(Color.BLACK)) {
@@ -125,7 +124,7 @@ public class Board {
         Position frontRightJump = pos.frontRight(direction).frontRight(direction);
         if (isValid(frontRightJump) && getPiece(frontRightJump) == null) {
             if (checker.isOpponent(getPiece(pos.frontRight(direction)))) {
-                if (!jumps.contains(frontRightJump)) {
+                if (!move.getMove().contains(frontRightJump)) {
                     endMove = false;
                     Move next_move = new Move(move);
                     next_move.add(frontRightJump);
@@ -136,10 +135,10 @@ public class Board {
         Position frontLeftJump = pos.frontLeft(direction).frontLeft(direction);
         if (isValid(frontLeftJump) && getPiece(frontLeftJump) == null) {
             if (checker.isOpponent(getPiece(pos.frontLeft(direction)))) {
-                if (!jumps.contains(frontLeftJump)) {
+                if (!move.getMove().contains(frontLeftJump)) {
                     endMove = false;
                     Move next_move = new Move(move);
-                    next_move.add(frontRightJump);
+                    next_move.add(frontLeftJump);
                     addJumps(jumps, next_move, direction, checker);
                 }
             }
@@ -148,7 +147,7 @@ public class Board {
             Position backRightJump = pos.backRight(direction).backRight(direction);
             if (isValid(backRightJump) && getPiece(backRightJump) == null) {
                 if (checker.isOpponent(getPiece(pos.backRight(direction)))) {
-                    if (!jumps.contains(backRightJump)) {
+                    if (!move.getMove().contains(backRightJump)) {
                         endMove = false;
                         Move next_move = new Move(move);
                         next_move.add(backRightJump);
@@ -159,7 +158,7 @@ public class Board {
             Position backLeftJump = pos.backLeft(direction).backLeft(direction);
             if (isValid(backLeftJump) && getPiece(backLeftJump) == null) {
                 if (checker.isOpponent(getPiece(pos.backLeft(direction)))) {
-                    if (!jumps.contains(backLeftJump)) {
+                    if (!move.getMove().contains(backLeftJump)) {
                         endMove = false;
                         Move next_move = new Move(move);
                         next_move.add(backLeftJump);
@@ -179,14 +178,19 @@ public class Board {
             Checker checker = getPiece(source);
             setPiece(source, null);
             setPiece(destination, checker);
+            System.out.println("is attack? "+isAttack);
             if (isAttack) {
+                System.out.println("trying to kill");
                 killPiece(between(source, destination));
             }
             int direction = 1;
             if (checker.getColor().equals(Color.BLACK)) {
                 direction = -1;
             }
-            if (destination.getRow()==4-4*direction) {
+            System.out.println(String.format("%s %s", destination.getRow(), (4+4*direction)));
+            System.out.println("tryna king me "+(destination.getRow()==(4+4*direction)));
+            if (destination.getRow()==3.5+3.5*direction) {
+                System.out.println("King me!");
                 setPiece(destination, new King(checker.getColor()));
             }
         }
