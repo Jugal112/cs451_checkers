@@ -71,7 +71,7 @@ public class GameManager {
 			Move theRealMove = board.getValidMoves(currentPlayerColor).get(moveIndex);
 			board.makeMove(theRealMove);
 			NormalNetworkManager.getInstance().sendMessage(new MoveNetworkMessage(theRealMove));
-			if (!theRealMove.getIsAttack() || !(board.getJumpMoves(theRealMove.getLastPosition(), currentPlayerColor).size() > 0)) {
+			if (!theRealMove.getIsAttack() || !(board.getJumpMoves(theRealMove.getLastPosition(), currentPlayerColor).size() > 0) || theRealMove.getIsPromotion()) {
 				//you can't make any more moves. end turn
 				Platform.runLater(new Runnable() {
 					@Override
@@ -88,7 +88,7 @@ public class GameManager {
 					public Integer apply(NetworkMessage t) {
 						// TODO Auto-generated method stub
 						if(t.getType() == PingNetworkMessage.class) {
-							System.out.println("Recieved Ping");
+							System.out.println("Received Ping");
 						}
 						return 1;
 					}
@@ -113,7 +113,7 @@ public class GameManager {
 					if(t.getType() == MoveNetworkMessage.class) {
 						Move move = (Move)t.get();
 						board.makeMove(move);
-						if (!move.getIsAttack() || !(board.getJumpMoves(move.getLastPosition(), opponentPlayerColor).size() > 0)) {
+						if (!move.getIsAttack() || !(board.getJumpMoves(move.getLastPosition(), opponentPlayerColor).size() > 0) || move.getIsPromotion()) {
 							//opponent cannot move
 							Platform.runLater(new Runnable() {
 								@Override

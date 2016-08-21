@@ -20,13 +20,21 @@ public class Move implements Serializable{
         return isAttack;
     }
 
-    public Move isAttack() {
+    public boolean getIsPromotion() {
+        return isPromotion;
+    }
+
+    public void isAttack() {
         this.isAttack = true;
-        return this;
+    }
+
+    public void isPromotion() {
+        this.isPromotion = true;
     }
 
     private ArrayList<Position> move;
     private boolean isAttack = false;
+    private boolean isPromotion = false;
 
     public void add(Position pos) {
         move.add(pos);

@@ -187,7 +187,26 @@ public class Board {
     }
 
     public void makeMove(Move move) {
-        movePiece(move.getMove().get(0), move.getMove().get(1), move.getIsAttack());
+        Position source = move.getMove().get(0);
+        Position destination = move.getMove().get(1);
+        if (getPiece(source) instanceof Checker && getPiece(destination) == null) {
+            Checker checker = getPiece(source);
+            setPiece(source, null);
+            setPiece(destination, checker);
+            System.out.println("is attack? "+move.getIsAttack());
+            if (move.getIsAttack()) {
+                killPiece(between(source, destination));
+            }
+            int direction = 1;
+            if (checker.getColor().equals(Color.BLACK)) {
+                direction = -1;
+            }
+            if (destination.getRow()==3.5+3.5*direction) {
+                System.out.println("King me!");
+                move.isPromotion();
+                setPiece(destination, new King(checker.getColor()));
+            }
+        }
     }
 
     public Checker getPiece(Position pos) {
