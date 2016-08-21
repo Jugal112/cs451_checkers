@@ -4,9 +4,9 @@ var color;
 
 //runs on entering checkerboard page
 checkersApp.controller('checkersController', function($scope, $sce) {
+	setupGame();
 	setupBoardUI();
 	setupPieceMovement();
-	setupGame();
 });
 
 

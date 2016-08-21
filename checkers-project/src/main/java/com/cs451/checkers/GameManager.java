@@ -101,10 +101,10 @@ public class GameManager {
 	public void setCurrentPlayer(Player player) {
 		this.currentPlayerNum = player;
 		if (player == Player.PLAYER1) {
-			currentPlayerColor = player1;
+			this.currentPlayerColor = player1;
 		}
 		else {
-			currentPlayerColor = player2;
+			this.currentPlayerColor = player2;
 		}
 	}
 	
