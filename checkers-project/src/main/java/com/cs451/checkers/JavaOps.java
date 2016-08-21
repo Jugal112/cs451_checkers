@@ -150,12 +150,11 @@ public class JavaOps {
         return ret;
     }
 
+    public String getValidMoves() {
+        return JSON.toString(Main.gm.getValidMoves());
+    }
+
     public String getPieces() {
-        //Main.gm.board.movePiece(new Position(0, 1), new Position(4, 1), false);
-        ArrayList<Move> moves = Main.gm.board.getValidMoves(Main.gm.currentPlayerColor);
-        for (Move m : moves) {
-            System.out.println(m.toString());
-        }
         String[][] pieces = Main.gm.board.toStringArray();
         return JSON.toString(pieces);
     }

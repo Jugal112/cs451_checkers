@@ -33,12 +33,20 @@ function setTurn(t){
 }
 
 function switchTurn(){
-        if(turn == Colors.RED) turn = Colors.BLACK;
-        else turn = Colors.RED;
-        whoseTurn();
+    if(turn == Colors.RED) turn = Colors.BLACK;
+    else turn = Colors.RED;
+    whoseTurn();
 }
 function warn(message){
 	$("#warn").text(message);
+}
+
+function highlightSquare(squareId) {
+    $("#" + squareId).addClass('highlighted');
+}
+
+function unhighlightSquare(squareId) {
+    $("#" + squareId).removeClass('highlighted');
 }
 
 function kingMe(squareId){
@@ -125,7 +133,7 @@ function setupBoardUI(){
 }
 
 function putPiecesOnBoard(){
-        console.log("putPiecesOnBoard");
+    console.log("putPiecesOnBoard");
 	var pieces = JSON.parse(javaOp.getPieces());
 	var alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
 	var color;
@@ -133,19 +141,19 @@ function putPiecesOnBoard(){
 	var bcount = 0;
 	var rcount = 0;
 
-        $("[id^=red]").remove();
+    $("[id^=red]").remove();
 	$("[id^=black]").remove();
 	
 	for(row in pieces){
 		for(column in pieces[row]){
 			color = pieces[row][column]
 			squareId = alphabet[row] + column.toString();
-
+            unhighlightSquare(squareId);
 			if(color == "RED"){
 				createPiece("red"+rcount.toString(), "red", squareId);
 				rcount += 1;
 			}
-			if(color == "RED_KING"){
+			else if(color == "RED_KING"){
                 createPiece("red"+rcount.toString(), "red", squareId);
                 rcount += 1;
                 kingMe(squareId);
@@ -161,6 +169,16 @@ function putPiecesOnBoard(){
 			}
 		}
 	}
+    if (turn != color) {
+        console.log(javaOp.getValidMoves());
+        var validMoves = JSON.parse(javaOp.getValidMoves());
+        console.log(validMoves);
+        for (move in validMoves) {
+            console.log(JSON.parse(validMoves[move])[1]);
+            highlightSquare(JSON.parse(validMoves[move])[1]);
+        }
+    }
+
 }
 
 function getPiece(id){

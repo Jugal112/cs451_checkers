@@ -57,15 +57,7 @@ public class Move implements Serializable{
     }
 
     public String toString() {
-        String s = "";
-        for (Position p: getMove()) {
-            s += p.toString() + " ";
-        }
-        String result = String.format("[ %s ] ", s);
-        if (isAttack) {
-            result += "ATTACK";
-        }
-        return result;
+        return move.toString();
     }
 
     public boolean equals(Object obj) {

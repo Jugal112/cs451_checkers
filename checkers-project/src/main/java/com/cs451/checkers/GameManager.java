@@ -58,6 +58,13 @@ public class GameManager {
 		return 0;
 	}
 
+	public ArrayList<Move> getValidMoves() {
+		if (lastAttack!=null) {
+			return board.getJumpMoves(lastAttack, currentPlayerColor);
+		}
+		return board.getValidMoves(currentPlayerColor);
+	}
+
 	public void makeMove(Move move){
 		System.out.println("making move "+move.toString());
 		System.out.println(board.getValidMoves(currentPlayerColor).contains(move));
@@ -71,8 +78,12 @@ public class GameManager {
 			Move theRealMove = board.getValidMoves(currentPlayerColor).get(moveIndex);
 			board.makeMove(theRealMove);
 			NormalNetworkManager.getInstance().sendMessage(new MoveNetworkMessage(theRealMove));
-			if (!theRealMove.getIsAttack() || !(board.getJumpMoves(theRealMove.getLastPosition(), currentPlayerColor).size() > 0) || theRealMove.getIsPromotion()) {
+			if (theRealMove.getIsAttack()) {
+				lastAttack = theRealMove.getLastPosition();
+			}
+			if (!theRealMove.getIsAttack() || !(board.getJumpMoves(lastAttack, currentPlayerColor).size() > 0) || theRealMove.getIsPromotion()) {
 				//you can't make any more moves. end turn
+				lastAttack = null;
 				Platform.runLater(new Runnable() {
 					@Override
 					public void run() {
