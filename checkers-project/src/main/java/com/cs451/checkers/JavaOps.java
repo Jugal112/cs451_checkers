@@ -83,6 +83,19 @@ public class JavaOps {
     	gm.makeMove(move);
     }
     
+    public void checkGameStatus(){
+    	GameManager gm = Main.gm;
+    	Color color = gm.checkGameState();
+    	if(color != null){
+    		gm.endGame();
+    	}
+    }
+    
+    public void endGame(){
+    	GameManager gm = Main.gm;
+    	gm.endGame();
+    }
+    
     public void waitForOpponent(){
     	log.info("Waiting for opponent move!");
     	GameManager gm = Main.gm;

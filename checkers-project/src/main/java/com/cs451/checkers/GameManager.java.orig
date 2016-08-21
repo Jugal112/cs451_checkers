@@ -78,6 +78,7 @@ public class GameManager {
 			Move theRealMove = board.getValidMoves(currentPlayerColor).get(moveIndex);
 			board.makeMove(theRealMove);
 			NormalNetworkManager.getInstance().sendMessage(new MoveNetworkMessage(theRealMove));
+<<<<<<< e73c34e8be7f04a1398906813d43c4d61c7f83fa
 			if (theRealMove.getIsAttack()) {
 				lastAttack = theRealMove.getLastPosition();
 			}
@@ -107,6 +108,33 @@ public class GameManager {
 				ReceiveMessageThread t = new ReceiveMessageThread(port, after);
 				t.start();
 			}
+=======
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					Main.browser.webEngine.executeScript("putPiecesOnBoard()");
+					Color c = checkGameState();
+					if(c != null){
+						Main.browser.webEngine.executeScript("setWinner('" + c + "')");
+					}
+					else{
+						Main.browser.webEngine.executeScript("switchTurn()");
+					}
+				}
+			});
+		}
+		else {
+			Platform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					Main.browser.webEngine.executeScript("putPiecesOnBoard()");
+					Color c = checkGameState();
+					if(c != null){
+						Main.browser.webEngine.executeScript("setWinner('" + c + "')");
+					}
+				}
+			});
+>>>>>>> add winning condition
 		}
 		Platform.runLater(new Runnable() {
 			@Override
@@ -148,15 +176,6 @@ public class GameManager {
 						});
 
 					}
-					else if(t.getType() == EndNetworkMessage.class){
-						Platform.runLater(new Runnable() {
-							@Override
-							public void run() {
-								Main.browser.webEngine.executeScript("setWinner('"+currentPlayerColor+"')");
-							}
-						});
-
-					}
 					return 1;
 				}
  			};
@@ -164,29 +183,12 @@ public class GameManager {
  		t.start();
 	}
 	
-	public void endGame(){
-		Function<Integer, Integer> after = new Function<Integer, Integer>() {
-			@Override
-			public Integer apply(Integer i) {
-				// TODO Auto-generated method stub
-				Platform.runLater(new Runnable() {
-					@Override
-					public void run() {
-						Main.browser.webEngine.executeScript("setWinner('"+opponentPlayerColor+"')");
-					}
-				});
-				return 1;
-			}
-		};
-		EndNetworkMessage enm = new EndNetworkMessage();
-		
-		SendMessageThread t = new SendMessageThread(port, enm, after);
-		t.start();
-	}
-	
 	public Color checkGameState(){
-		if(board.getValidMoves(this.currentPlayerColor).isEmpty()){
+		if(board.getValidMoves(this.player1).isEmpty()){
 			return this.player2;
+		}
+		else if(board.getValidMoves(this.player2).isEmpty()){
+			return this.player1;
 		}
 		return null;
 	}

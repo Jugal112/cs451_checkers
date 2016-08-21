@@ -1,0 +1,46 @@
+<!doctype html>
+    <html lang="en" ng-app="checkersApp">
+      <head>
+        <meta charset="utf-8">
+        <title>Checkers</title>
+<<<<<<< a8b2207d2c46bd9aeee03eeae47ff685dbea2dad
+        	<!-- Debugger feel free to comment out if not in use
+			
+
+				ONLY FOR DEBUGGING    
+
+		  	before any uses of the backend objects -->
+		  <script type='text/javascript' src='jslib/firebug-lite-compressed.js'></script>
+		  <script src="jslib/jquery-1.9.1.min.js" type="text/javascript"></script>
+=======
+        	
+			<!--
+				ONLY FOR DEBUGGING    -->
+			<script type='text/javascript' src='jslib/firebug-lite-compressed.js'></script>
+        
+        	<!-- before any uses of the backend objects -->
+ 			<script src="jslib/jquery-1.9.1.min.js" type="text/javascript"></script>
+>>>>>>> committing what I have so far
+ 			<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+ 			
+ 			<script src="jslib/angular.js"></script>
+			<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-resource.min.js"></script>
+         	<script src="jslib/angular-ui-router.min.js" type="text/javascript"></script>
+
+			<script src="js/init.js" type="text/javascript"></script>
+			<script src="js/confetti.js" type="text/javascript"></script>	
+			
+			<script src="js/menu-controller.js" type="text/javascript"></script>			
+			<script src="js/client-controller.js" type="text/javascript"></script>			
+			<script src="js/host-controller.js" type="text/javascript"></script>		
+			<script src="js/checkers-controller.js" type="text/javascript"></script>			
+					
+			<link rel="stylesheet" href="style.css">
+			
+      	</head>
+
+     	<body id="main" ng-controller="mainController">
+			<div ui-view>
+			</div>
+	</body>
+</html>
