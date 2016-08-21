@@ -49,6 +49,30 @@ function unhighlightSquare(squareId) {
     $("#" + squareId).removeClass('highlighted');
 }
 
+function unhighlightAll(){
+	console.log("unhighlightAll");
+	var pieces = JSON.parse(javaOp.getPieces());
+	var alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
+	var squareId;
+	
+	for(row in pieces){
+		for(column in pieces[row]){
+			squareId = alphabet[row] + column.toString();
+            unhighlightSquare(squareId);
+		}
+	}
+}
+
+function highlightValidMoves(){
+	console.log(javaOp.getValidMoves());
+    var validMoves = JSON.parse(javaOp.getValidMoves());
+    console.log(validMoves);
+    for (move in validMoves) {
+    	console.log(JSON.parse(validMoves[move])[1]);
+        highlightSquare(JSON.parse(validMoves[move])[1]);
+    }
+}
+
 function kingMe(squareId){
 	$("#" + squareId).find(".piece").addClass('king');
 }
@@ -69,14 +93,16 @@ function startGame(c){
 }
 
 function whoseTurn(){
+	unhighlightAll();
 	if(turn == color){
 		$('.menu #text').text("Your Turn");
 		$('.menu #color').text("You are " + color);
+		highlightValidMoves();
 	}
 	else{
 		$('.menu #text').text("Opponent's Turn");
 		$('.menu #color').text("You are " + color);
-                javaOp.waitForOpponent();
+        javaOp.waitForOpponent();
 	}
 }
 
@@ -145,12 +171,10 @@ function putPiecesOnBoard(){
 
     $("[id^=red]").remove();
 	$("[id^=black]").remove();
-	
 	for(row in pieces){
 		for(column in pieces[row]){
 			color = pieces[row][column]
 			squareId = alphabet[row] + column.toString();
-            unhighlightSquare(squareId);
 			if(color == "RED"){
 				createPiece("red"+rcount.toString(), "red", squareId);
 				rcount += 1;
@@ -171,6 +195,7 @@ function putPiecesOnBoard(){
 			}
 		}
 	}
+	/*
     if (turn != color) {
         console.log(javaOp.getValidMoves());
         var validMoves = JSON.parse(javaOp.getValidMoves());
@@ -180,6 +205,7 @@ function putPiecesOnBoard(){
             highlightSquare(JSON.parse(validMoves[move])[1]);
         }
     }
+    */
 
 }
 
