@@ -70,10 +70,6 @@ function whoseTurn(){
 	}
 }
 
-function warn(){
-	
-}
-
 function setupPieceMovement(){
 	var selecting = false;
 	var selected = null;
@@ -82,8 +78,8 @@ function setupPieceMovement(){
 		console.log(color);
 		if(turn == color && $(this).hasClass(color.toLowerCase())){
 			if($(".selected").length == 0){
-				var selecting = false;
-				var selected = null;
+				selecting = false;
+				selected = null;
 				orig_pos = null;
 			}
 		
