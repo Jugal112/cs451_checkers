@@ -5,6 +5,7 @@ target/
 bin/
 *.swp
 *.swo
+*.orig
 
 # Idea
 .idea
