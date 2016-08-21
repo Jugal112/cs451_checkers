@@ -85,7 +85,7 @@ public class Board {
             }
             if (checker instanceof King) {
                 Position backLeft = pos.backLeft(direction);
-                if (isValid(backLeft) && getPiece(frontLeft) == null) {
+                if (isValid(backLeft) && getPiece(backLeft) == null) {
                     Move move = new Move();
                     move.getMove().add(pos);
                     move.getMove().add(backLeft);
