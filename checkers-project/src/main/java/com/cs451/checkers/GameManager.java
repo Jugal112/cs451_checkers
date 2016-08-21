@@ -70,8 +70,14 @@ public class GameManager {
 			Platform.runLater(new Runnable() {
 				@Override
 				public void run() {
-					Main.browser.webEngine.executeScript("switchTurn()");
 					Main.browser.webEngine.executeScript("putPiecesOnBoard()");
+					Color c = checkGameState();
+					if(c != null){
+						Main.browser.webEngine.executeScript("setWinner('" + c + "')");
+					}
+					else{
+						Main.browser.webEngine.executeScript("switchTurn()");
+					}
 				}
 			});
 		}
@@ -80,6 +86,10 @@ public class GameManager {
 				@Override
 				public void run() {
 					Main.browser.webEngine.executeScript("putPiecesOnBoard()");
+					Color c = checkGameState();
+					if(c != null){
+						Main.browser.webEngine.executeScript("setWinner('" + c + "')");
+					}
 				}
 			});
 		}
@@ -108,8 +118,14 @@ public class GameManager {
  		t.start();
 	}
 	
-	public void checkGameState(){
-		//check if all black or all red pieces are missing
+	public Color checkGameState(){
+		if(board.getValidMoves(this.player1).isEmpty()){
+			return this.player2;
+		}
+		else if(board.getValidMoves(this.player2).isEmpty()){
+			return this.player1;
+		}
+		return null;
 	}
 	
 	public void setCurrentPlayer(Player player) {
