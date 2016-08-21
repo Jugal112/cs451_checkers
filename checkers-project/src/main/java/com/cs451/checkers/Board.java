@@ -1,6 +1,7 @@
 package com.cs451.checkers;
 
 import java.util.ArrayList;
+import com.cs451.checkers.GameManager.Color;
 
 public class Board {
     Checker[][] pieces;
@@ -13,9 +14,9 @@ public class Board {
                 if ((i + j) % 2 == 0) {
                     pieces[i][j] = null;
                 } else if (i < 3) {
-                    pieces[i][j] = new Checker("r");
+                    pieces[i][j] = new Checker(Color.RED);
                 } else if (i >= 5) {
-                    pieces[i][j] = new Checker("b");
+                    pieces[i][j] = new Checker(Color.BLACK);
                 } else {
                     pieces[i][j] = null;
                 }
@@ -37,13 +38,13 @@ public class Board {
         return pieces_str;
     }
 
-    public ArrayList<Move> getValidMoves() {
+    public ArrayList<Move> getValidMoves(Color color) {
         ArrayList<Move> moves = new ArrayList<Move>();
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 if ((i + j) % 2 == 1) {
                     Position pos = new Position(i, j);
-                    moves.addAll(getJumpMoves(pos));
+                    moves.addAll(getJumpMoves(pos, color));
                 }
             }
         }
@@ -52,7 +53,7 @@ public class Board {
                 for (int j = 0; j < 8; j++) {
                     if ((i + j) % 2 == 1) {
                         Position pos = new Position(i, j);
-                        moves.addAll(getRegularMoves(pos));
+                        moves.addAll(getRegularMoves(pos, color));
                     }
                 }
             }
@@ -60,12 +61,12 @@ public class Board {
         return moves;
     }
 
-    public ArrayList<Move> getRegularMoves(Position pos) {
+    public ArrayList<Move> getRegularMoves(Position pos, Color color) {
         ArrayList<Move> moves = new ArrayList<Move>();
         Checker checker = getPiece(pos);
         if (checker instanceof Checker) {
             int direction = 1;
-            if (checker.getColor().equals("b")) {
+            if (checker.getColor().equals(Color.BLACK)) {
                 direction = -1;
             }
             Position frontLeft = pos.frontLeft(direction);
@@ -102,12 +103,12 @@ public class Board {
         return moves;
     }
 
-    public ArrayList<Move> getJumpMoves(Position pos) {
+    public ArrayList<Move> getJumpMoves(Position pos, Color color) {
         ArrayList<Move> jumps = new ArrayList<Move>();
         Checker checker = getPiece(pos);
         if (checker instanceof Checker) {
             int direction = 1;
-            if (checker.getColor().equals("b")) {
+            if (checker.getColor().equals(Color.BLACK)) {
                 direction = -1;
             }
             Move move = new Move();
@@ -181,7 +182,7 @@ public class Board {
                 killPiece(between(source, destination));
             }
             int direction = 1;
-            if (checker.getColor().equals("b")) {
+            if (checker.getColor().equals(Color.BLACK)) {
                 direction = -1;
             }
             if (destination.getRow()==4-4*direction) {

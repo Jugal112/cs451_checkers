@@ -1,54 +1,54 @@
 package com.cs451.checkers;
 
 import junit.framework.TestCase;
-
+import com.cs451.checkers.GameManager.Color;
 public class CheckerTest extends TestCase {
 
 	private Checker redChecker;
 	private Checker blackChecker;
 
 	public void testGetColor() {
-		redChecker = new Checker("r");
-		blackChecker = new Checker("b");
+		redChecker = new Checker(Color.RED);
+		blackChecker = new Checker(Color.BLACK);
 
-		assertTrue("r".equals(redChecker.getColor()));
-		assertTrue("b".equals(blackChecker.getColor()));
+		assertTrue(Color.RED.equals(redChecker.getColor()));
+		assertTrue(Color.BLACK.equals(blackChecker.getColor()));
 	}
 
 	public void testSetColor() {
-		redChecker = new Checker("r");
-		blackChecker = new Checker("b");
+		redChecker = new Checker(Color.RED);
+		blackChecker = new Checker(Color.BLACK);
 
-		assertTrue("r".equals(redChecker.getColor()));
-		assertTrue("b".equals(blackChecker.getColor()));
+		assertTrue(Color.RED.equals(redChecker.getColor()));
+		assertTrue(Color.BLACK.equals(blackChecker.getColor()));
 
-		redChecker.setColor("b");
-		blackChecker.setColor("r");
+		redChecker.setColor(Color.BLACK);
+		blackChecker.setColor(Color.RED);
 
-		assertTrue("b".equals(redChecker.getColor()));
-		assertTrue("r".equals(blackChecker.getColor()));
+		assertTrue(Color.BLACK.equals(redChecker.getColor()));
+		assertTrue(Color.RED.equals(blackChecker.getColor()));
 	}
 
 	public void testChecker() {
 		redChecker = null;
 		assertTrue(redChecker==null);
-		redChecker = new Checker("r");
+		redChecker = new Checker(Color.RED);
 		assertTrue(redChecker != null);
 	}
 
 	public void testToString() {
-		redChecker = new Checker("r");
-		blackChecker = new Checker("b");
+		redChecker = new Checker(Color.RED);
+		blackChecker = new Checker(Color.BLACK);
 
-		assertTrue("r".equals(redChecker.getColor()));
-		assertTrue("b".equals(blackChecker.getColor()));
+		assertTrue(Color.RED.equals(redChecker.getColor()));
+		assertTrue(Color.BLACK.equals(blackChecker.getColor()));
 	}
 	
 	public void testIsOpponent(){
-		assertTrue(new Checker("r").isOpponent(new Checker("b")));
-		assertTrue(new Checker("b").isOpponent(new Checker("r")));
-		assertFalse(new Checker("r").isOpponent(new Checker("r")));
-		assertFalse(new Checker("b").isOpponent(new Checker("b")));
+		assertTrue(new Checker(Color.RED).isOpponent(new Checker(Color.BLACK)));
+		assertTrue(new Checker(Color.BLACK).isOpponent(new Checker(Color.RED)));
+		assertFalse(new Checker(Color.RED).isOpponent(new Checker(Color.RED)));
+		assertFalse(new Checker(Color.BLACK).isOpponent(new Checker(Color.BLACK)));
 	}
 
 }

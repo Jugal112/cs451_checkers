@@ -1,5 +1,6 @@
 package com.cs451.checkers;
 
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.function.Function;
 
@@ -12,10 +13,10 @@ public class GameManager {
 	enum Player {PLAYER1, PLAYER2};
 	public static final int port = 5500;
 	
-	Player playerNum;
 	Color player1; //host
 	Color player2; //client
-	Color currentPlayer;
+	Player currentPlayerNum;
+	Color currentPlayerColor;
 	Board board;
 	
 	public GameManager() {
@@ -56,7 +57,11 @@ public class GameManager {
 		Main.browser.setInitialization(color);
 		return 0;
 	}
-	
+
+	public ArrayList<Move> getValidMoves() {
+		return board.getValidMoves(this.currentPlayerColor);
+	}
+
 	public void makeMove(Move move){
 		board.makeMove(move);
 		NormalNetworkManager.getInstance().sendMessage(new MoveNetworkMessage(move));
@@ -95,7 +100,10 @@ public class GameManager {
 		//check if all black or all red pieces are missing
 	}
 	
-	
+	public void setCurrentPlayer(Player player) {
+		currentPlayerNum = player;
+	}
+
 	private void swapColors(){
 		Color temp = player1;
 		player1 = player2;

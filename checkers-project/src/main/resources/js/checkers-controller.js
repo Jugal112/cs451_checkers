@@ -144,13 +144,23 @@ function putPiecesOnBoard(){
 			color = pieces[row][column]
 			squareId = alphabet[row] + column.toString();
 
-			if(color == "r"){
+			if(color == "RED"){
 				createPiece("red"+rcount.toString(), "red", squareId);
 				rcount += 1;
 			}
-			else if(color == "b"){
+			if(color == "RED_KING"){
+                createPiece("red"+rcount.toString(), "red", squareId);
+                rcount += 1;
+                kingMe(squareId);
+			}
+			else if(color == "BLACK"){
 				createPiece("black"+bcount.toString(), "black", squareId);
 				bcount += 1;
+			}
+			else if(color == "BLACK_KING"){
+				createPiece("black"+bcount.toString(), "black", squareId);
+				bcount += 1;
+				kingMe(squareId);
 			}
 		}
 	}

@@ -3,18 +3,20 @@ package com.cs451.checkers;
 /**
  * Created by jugal on 8/15/2016.
  */
+import com.cs451.checkers.GameManager.Color;
+
 public class Checker {
-	protected String color;
+	protected Color color;
 	
-    public String getColor() {
+    public Color getColor() {
         return color;
     }
 
-    public void setColor(String color) {
+    public void setColor(Color color) {
         this.color = color;
     }    
 
-    public Checker (String color) {
+    public Checker (Color color) {
         this.color = color;
     }
 
@@ -29,7 +31,7 @@ public class Checker {
     }
 
     public String toString() {
-        return this.color;
+        return this.color.toString();
     }
 
 }

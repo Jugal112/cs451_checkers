@@ -35,7 +35,7 @@ public class JavaOps {
 		
     	if(role.equals("HOST")){
     		gm.initGame();
-    		
+
     		Function<Integer, Integer> after = new Function<Integer, Integer>() {
 			@Override
 				public Integer apply(Integer t) {
@@ -51,7 +51,7 @@ public class JavaOps {
  	    	mt.start();
     	}
     	else{
-  			
+
   			InitializationMessage im = new InitializationMessage();
   			im.set(gm.player1);
     		Function<NetworkMessage, Integer> after = new Function<NetworkMessage, Integer>() {
@@ -148,7 +148,7 @@ public class JavaOps {
 
     public String getPieces() {
         //Main.gm.board.movePiece(new Position(0, 1), new Position(4, 1), false);
-        ArrayList<Move> moves = Main.gm.board.getValidMoves();
+        ArrayList<Move> moves = Main.gm.getValidMoves();
         for (Move m : moves) {
             System.out.println(m.toString());
         }

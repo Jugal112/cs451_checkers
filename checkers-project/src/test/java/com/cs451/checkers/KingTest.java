@@ -1,44 +1,44 @@
 package com.cs451.checkers;
 
 import junit.framework.TestCase;
-
+import com.cs451.checkers.GameManager.Color;
 public class KingTest extends TestCase {
 
 	King redKing;
 	King blackKing;
 	public void testGetColor() {
-		redKing = new King("r");
-		blackKing = new King("b");
+		redKing = new King(Color.RED);
+		blackKing = new King(Color.RED);
 
-		assertTrue("r".equals(redKing.getColor()));
-		assertTrue("b".equals(blackKing.getColor()));
+		assertTrue("RED".equals(redKing.getColor()));
+		assertTrue("BLACK".equals(blackKing.getColor()));
 	}
 
 	public void testSetColor() {
-		redKing = new King("r");
-		blackKing = new King("b");
+		redKing = new King(Color.RED);
+		blackKing = new King(Color.BLACK);
 
-		assertTrue("r".equals(redKing.getColor()));
-		assertTrue("b".equals(blackKing.getColor()));
+		assertTrue("RED".equals(redKing.getColor()));
+		assertTrue("BLACK".equals(blackKing.getColor()));
 
-		redKing.setColor("b");
-		blackKing.setColor("r");
+		redKing.setColor(Color.BLACK);
+		blackKing.setColor(Color.RED);
 
-		assertTrue("b".equals(redKing.getColor()));
-		assertTrue("r".equals(blackKing.getColor()));
+		assertTrue("BLACK".equals(redKing.getColor()));
+		assertTrue("RED".equals(blackKing.getColor()));
 	}
 
 	public void testKing() {
 		redKing = null;
 		assertTrue(redKing==null);
-		redKing = new King("r");
+		redKing = new King(Color.RED);
 		assertTrue(redKing != null);
 	}
 
 	public void testToString() {
-		redKing = new King("r");
-		blackKing = new King("b");
-		assertTrue("rK".equals(redKing.toString()));
-		assertTrue("bK".equals(blackKing.toString()));
+		redKing = new King(Color.RED);
+		blackKing = new King(Color.BLACK);
+		assertTrue("RED_KING".equals(redKing.toString()));
+		assertTrue("BLACK_KING".equals(blackKing.toString()));
 	}
 }
