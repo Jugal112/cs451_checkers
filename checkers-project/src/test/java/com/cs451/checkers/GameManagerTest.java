@@ -1,6 +1,7 @@
 package com.cs451.checkers;
 
 import com.cs451.checkers.GameManager.Color;
+import com.cs451.checkers.GameManager.Player;
 
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
@@ -11,7 +12,6 @@ public class GameManagerTest extends TestCase {
 
 	public void testInitGame() {
 		GameManager gm = new GameManager();
-		assertTrue(gm.board == null);
 		assertTrue(gm.player1 == null);
 		assertTrue(gm.player2 == null);
 		gm.initGame();
@@ -23,7 +23,6 @@ public class GameManagerTest extends TestCase {
 
 	public void testInitGameColor() {
 		GameManager gm = new GameManager();
-		assertTrue(gm.board == null);
 		assertTrue(gm.player1 == null);
 		assertTrue(gm.player2 == null);
 		gm.initGame(Color.BLACK);
@@ -32,7 +31,6 @@ public class GameManagerTest extends TestCase {
 		assertTrue(gm.player2 == Color.RED);
 		
 		gm = new GameManager();
-		assertTrue(gm.board == null);
 		assertTrue(gm.player1 == null);
 		assertTrue(gm.player2 == null);
 		gm.initGame(Color.RED);
@@ -63,16 +61,22 @@ public class GameManagerTest extends TestCase {
 			e.printStackTrace();
 		}
 	}
-
-	public void testMakeMove() {
-		fail("Not yet implemented");
+	
+	public void testWaitForOpponent(){
+		GameManager gm = new GameManager();
+		gm.waitForOpponent();
 	}
-
-	public void testWaitForOpponent() {
-		fail("Not yet implemented");
+	
+	public void testCheckGameState(){
+		GameManager gm = new GameManager();
+		gm.checkGameState();
 	}
-
-	public void testCheckGameState() {
-		fail("Not yet implemented");
+	
+	public void testSetGetCurrentPlayer(){
+		GameManager gm = new GameManager();
+		gm.setCurrentPlayer(Player.PLAYER1);
+		assertTrue(gm.getCurrentPlayer() == Player.PLAYER1);
+		gm.setCurrentPlayer(Player.PLAYER2);
+		assertTrue(gm.getCurrentPlayer() == Player.PLAYER2);
 	}
 }
