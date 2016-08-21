@@ -23,19 +23,19 @@ function setWinner(winner){
 		$('.menu #text').text("YOU LOSE!");
 	}
 	
-	$(".menu #playAgain").show();
+	$(".menu #restart button").show();
 }
 
 function setTurn(t){
-        console.log("Turn: " + turn);
+    console.log("Turn: " + turn);
 	turn = t;
 	whoseTurn();
 }
 
 function switchTurn(){
-        if(turn == Colors.RED) turn = Colors.BLACK;
-        else turn = Colors.RED;
-        whoseTurn();
+    if(turn == Colors.RED) turn = Colors.BLACK;
+    else turn = Colors.RED;
+    whoseTurn();
 }
 function warn(message){
 	$("#warn").text(message);
@@ -54,9 +54,9 @@ function startGame(c){
 	turn = Colors.BLACK;
 	color = Colors[c];
 	whoseTurn();
-        if(turn != color){
-           console.log("About to start waiting for opponent turn!");
-           
+    if(turn != color){
+    	console.log("About to start waiting for opponent turn!");
+    	putPiecesOnBoard();
 	}
 }
 
@@ -68,7 +68,7 @@ function whoseTurn(){
 	else{
 		$('.menu #text').text("Opponent's Turn");
 		$('.menu #color').text("You are " + color);
-                javaOp.waitForOpponent();
+        javaOp.waitForOpponent();
 	}
 }
 
@@ -121,6 +121,11 @@ function setupBoardUI(){
 	
 	$('.pane').append(generateBoard());
 	
+	$(document).on('click', '.menu #restart button', function(){
+		setupGame();
+		$(this).hide();
+	});
+	
 	$(document).ready(function(){
 		putPiecesOnBoard();
 	});
@@ -135,8 +140,8 @@ function putPiecesOnBoard(){
 	var bcount = 0;
 	var rcount = 0;
 
-        $("[id^=red]").remove();
-	$("[id^=black]").remove();
+    $(".red").remove();
+	$(".black").remove();
 	
 	for(row in pieces){
 		for(column in pieces[row]){

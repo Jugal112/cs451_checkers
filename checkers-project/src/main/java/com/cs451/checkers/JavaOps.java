@@ -32,7 +32,6 @@ public class JavaOps {
 
     public void initializeGame(String role){
 		GameManager gm = Main.gm;
-		System.out.println(role);
 		
     	if(role.equals("HOST")){
     		gm.initGame();
@@ -53,7 +52,6 @@ public class JavaOps {
  	    	mt.start();
     	}
     	else{
-  			
   			InitializationMessage im = new InitializationMessage();
   			im.set(gm.player1);
     		Function<NetworkMessage, Integer> after = new Function<NetworkMessage, Integer>() {
