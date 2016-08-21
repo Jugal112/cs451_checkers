@@ -158,6 +158,11 @@ body{
 	text-align:center;
 	font-weight:bold;
 }
+.menu #color{
+	margin:auto;
+	text-align:center;
+	font-weight:bold;
+}
 .menu #warn{
 	margin:auto;
 	height:10%;

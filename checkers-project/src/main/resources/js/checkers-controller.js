@@ -63,9 +63,11 @@ function startGame(c){
 function whoseTurn(){
 	if(turn == color){
 		$('.menu #text').text("Your Turn");
+		$('.menu #color').text("You are " + color);
 	}
 	else{
 		$('.menu #text').text("Opponent's Turn");
+		$('.menu #color').text("You are " + color);
                 javaOp.waitForOpponent();
 	}
 }
