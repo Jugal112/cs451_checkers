@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.function.Function;
 
-import com.cs451.checkers.GameManager.Color;
-
 import javafx.application.Platform;
 
 public class GameManager {
@@ -101,7 +99,11 @@ public class GameManager {
 	}
 	
 	public void setCurrentPlayer(Player player) {
-		currentPlayerNum = player;
+		this.currentPlayerNum = player;
+	}
+	
+	public Player getCurrentPlayer() {
+		return this.currentPlayerNum;
 	}
 
 	private void swapColors(){
