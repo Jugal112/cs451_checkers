@@ -64,7 +64,8 @@ public class Board {
     public ArrayList<Move> getRegularMoves(Position pos, Color color) {
         ArrayList<Move> moves = new ArrayList<Move>();
         Checker checker = getPiece(pos);
-        if (checker instanceof Checker) {
+        System.out.println(color);
+        if (checker instanceof Checker && checker.getColor() == color) {
             int direction = 1;
             if (checker.getColor().equals(Color.BLACK)) {
                 direction = -1;
@@ -106,7 +107,7 @@ public class Board {
     public ArrayList<Move> getJumpMoves(Position pos, Color color) {
         ArrayList<Move> jumps = new ArrayList<Move>();
         Checker checker = getPiece(pos);
-        if (checker instanceof Checker) {
+        if (checker instanceof Checker && checker.getColor() == color) {
             int direction = 1;
             if (checker.getColor().equals(Color.BLACK)) {
                 direction = -1;
