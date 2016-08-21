@@ -22,6 +22,6 @@ public class PingNetworkMessage extends  NetworkMessage {
 
     @Override
     public Class getType() {
-        return null;
+        return PingNetworkMessage.class;
     }
 }

@@ -126,6 +126,8 @@ public class GameManager {
 							//opponent can still move;
 							System.out.println("Sending ping because opponent can still go");
 							NormalNetworkManager.getInstance().sendMessage(new PingNetworkMessage());
+							ReceiveMessageThread lt = new ReceiveMessageThread(port, this);
+					 		lt.start();
 						}
 						Platform.runLater(new Runnable() {
 							@Override
