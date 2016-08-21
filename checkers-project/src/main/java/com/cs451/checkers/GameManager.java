@@ -15,7 +15,9 @@ public class GameManager {
 	Color player2; //client
 	Player currentPlayerNum;
 	Color currentPlayerColor;
+	Color opponentPlayerColor;
 	Board board;
+	Position lastAttack;
 	
 	public GameManager() {
 		board = new Board();
@@ -56,33 +58,51 @@ public class GameManager {
 		return 0;
 	}
 
-	public ArrayList<Move> getValidMoves() {
-		return board.getValidMoves(this.currentPlayerColor);
-	}
-
 	public void makeMove(Move move){
 		System.out.println("making move "+move.toString());
-		System.out.println(getValidMoves().contains(move));
-		if (getValidMoves().contains(move)) {
-			Move theRealMove = getValidMoves().get(getValidMoves().indexOf(move));
+		System.out.println(board.getValidMoves(currentPlayerColor).contains(move));
+		int moveIndex;
+		if (lastAttack == null) {
+			moveIndex = board.getValidMoves(currentPlayerColor).indexOf(move);
+		} else {
+			moveIndex = board.getJumpMoves(lastAttack, currentPlayerColor).indexOf(move);
+		}
+		if (moveIndex >= 0) {
+			Move theRealMove = board.getValidMoves(currentPlayerColor).get(moveIndex);
 			board.makeMove(theRealMove);
 			NormalNetworkManager.getInstance().sendMessage(new MoveNetworkMessage(theRealMove));
-			Platform.runLater(new Runnable() {
-				@Override
-				public void run() {
-					Main.browser.webEngine.executeScript("switchTurn()");
-					Main.browser.webEngine.executeScript("putPiecesOnBoard()");
-				}
-			});
+			if (!theRealMove.getIsAttack() || !(board.getJumpMoves(theRealMove.getLastPosition(), currentPlayerColor).size() > 0)) {
+				//you can't make any more moves. end turn
+				Platform.runLater(new Runnable() {
+					@Override
+					public void run() {
+						Main.browser.webEngine.executeScript("switchTurn()");
+					}
+				});
+			}
+			else {
+				//you can make a move but we need a ping back
+				System.out.println("Waiting for ping back");
+				Function<NetworkMessage, Integer> after = new Function<NetworkMessage, Integer>() {
+					@Override
+					public Integer apply(NetworkMessage t) {
+						// TODO Auto-generated method stub
+						if(t.getType() == PingNetworkMessage.class) {
+							System.out.println("Recieved Ping");
+						}
+						return 1;
+					}
+				};
+				ReceiveMessageThread t = new ReceiveMessageThread(port, after);
+				t.start();
+			}
 		}
-		else {
-			Platform.runLater(new Runnable() {
-				@Override
-				public void run() {
-					Main.browser.webEngine.executeScript("putPiecesOnBoard()");
-				}
-			});
-		}
+		Platform.runLater(new Runnable() {
+			@Override
+			public void run() {
+				Main.browser.webEngine.executeScript("putPiecesOnBoard()");
+			}
+		});
 	}
 	
 	public void waitForOpponent(){
@@ -93,13 +113,27 @@ public class GameManager {
 					if(t.getType() == MoveNetworkMessage.class) {
 						Move move = (Move)t.get();
 						board.makeMove(move);
+						if (!move.getIsAttack() || !(board.getJumpMoves(move.getLastPosition(), opponentPlayerColor).size() > 0)) {
+							//opponent cannot move
+							Platform.runLater(new Runnable() {
+								@Override
+								public void run() {
+									Main.browser.webEngine.executeScript("switchTurn()");
+								}
+							});
+						}
+						else {
+							//opponent can still move;
+							System.out.println("Sending ping because opponent can still go");
+							NormalNetworkManager.getInstance().sendMessage(new PingNetworkMessage());
+						}
 						Platform.runLater(new Runnable() {
-					      @Override
-						  public void run() {
-						     	Main.browser.webEngine.executeScript("putPiecesOnBoard()");
-						     	Main.browser.webEngine.executeScript("switchTurn()");
-						  }
+							@Override
+							public void run() {
+								Main.browser.webEngine.executeScript("putPiecesOnBoard()");
+							}
 						});
+
 					}
 					return 1;
 				}
@@ -116,9 +150,11 @@ public class GameManager {
 		this.currentPlayerNum = player;
 		if (player == Player.PLAYER1) {
 			this.currentPlayerColor = player1;
+			this.opponentPlayerColor = player2;
 		}
 		else {
 			this.currentPlayerColor = player2;
+			this.opponentPlayerColor = player1;
 		}
 	}
 	

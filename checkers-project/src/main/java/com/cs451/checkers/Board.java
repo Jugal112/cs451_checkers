@@ -104,73 +104,60 @@ public class Board {
     }
 
     public ArrayList<Move> getJumpMoves(Position pos, Color color) {
-        ArrayList<Move> jumps = new ArrayList<Move>();
+        ArrayList<Move> jumps = new ArrayList<>();
         Checker checker = getPiece(pos);
         if (checker instanceof Checker && checker.getColor() == color) {
             int direction = 1;
             if (checker.getColor().equals(Color.BLACK)) {
                 direction = -1;
             }
-            Move move = new Move();
-            move.add(pos);
-            addJumps(jumps, move, direction, checker);
+            Position frontRightJump = pos.frontRight(direction).frontRight(direction);
+            if (isValid(frontRightJump) && getPiece(frontRightJump) == null) {
+                if (checker.isOpponent(getPiece(pos.frontRight(direction)))) {
+                        Move next_move = new Move();
+                        next_move.add(pos);
+                        next_move.add(frontRightJump);
+                        jumps.add(next_move);
+                }
+            }
+            Position frontLeftJump = pos.frontLeft(direction).frontLeft(direction);
+            if (isValid(frontLeftJump) && getPiece(frontLeftJump) == null) {
+                if (checker.isOpponent(getPiece(pos.frontLeft(direction)))) {
+                    Move next_move = new Move();
+                    next_move.add(pos);
+                    next_move.add(frontLeftJump);
+                    jumps.add(next_move);
+                }
+            }
+            if (checker instanceof King) {
+                Position backRightJump = pos.backRight(direction).backRight(direction);
+                if (isValid(backRightJump) && getPiece(backRightJump) == null) {
+                    if (checker.isOpponent(getPiece(pos.backRight(direction)))) {
+                        Move next_move = new Move();
+                        next_move.add(pos);
+                        next_move.add(backRightJump);
+                        jumps.add(next_move);
+                    }
+                }
+                Position backLeftJump = pos.backLeft(direction).backLeft(direction);
+                if (isValid(backLeftJump) && getPiece(backLeftJump) == null) {
+                    if (checker.isOpponent(getPiece(pos.backLeft(direction)))) {
+                        Move next_move = new Move();
+                        next_move.add(pos);
+                        next_move.add(backLeftJump);
+                        jumps.add(next_move);
+                    }
+                }
+            }
+        }
+        for (Move m : jumps) {
+            m.isAttack();
         }
         return jumps;
     }
 
     public void addJumps(ArrayList<Move> jumps, Move move, int direction, Checker checker) {
-        Position pos = move.getLastPosition();
-        boolean endMove = true;
-        Position frontRightJump = pos.frontRight(direction).frontRight(direction);
-        if (isValid(frontRightJump) && getPiece(frontRightJump) == null) {
-            if (checker.isOpponent(getPiece(pos.frontRight(direction)))) {
-                if (!move.getMove().contains(frontRightJump)) {
-                    endMove = false;
-                    Move next_move = new Move(move);
-                    next_move.add(frontRightJump);
-                    addJumps(jumps, next_move, direction, checker);
-                }
-            }
-        }
-        Position frontLeftJump = pos.frontLeft(direction).frontLeft(direction);
-        if (isValid(frontLeftJump) && getPiece(frontLeftJump) == null) {
-            if (checker.isOpponent(getPiece(pos.frontLeft(direction)))) {
-                if (!move.getMove().contains(frontLeftJump)) {
-                    endMove = false;
-                    Move next_move = new Move(move);
-                    next_move.add(frontLeftJump);
-                    addJumps(jumps, next_move, direction, checker);
-                }
-            }
-        }
-        if (checker instanceof King) {
-            Position backRightJump = pos.backRight(direction).backRight(direction);
-            if (isValid(backRightJump) && getPiece(backRightJump) == null) {
-                if (checker.isOpponent(getPiece(pos.backRight(direction)))) {
-                    if (!move.getMove().contains(backRightJump)) {
-                        endMove = false;
-                        Move next_move = new Move(move);
-                        next_move.add(backRightJump);
-                        addJumps(jumps, next_move, direction, checker);
-                    }
-                }
-            }
-            Position backLeftJump = pos.backLeft(direction).backLeft(direction);
-            if (isValid(backLeftJump) && getPiece(backLeftJump) == null) {
-                if (checker.isOpponent(getPiece(pos.backLeft(direction)))) {
-                    if (!move.getMove().contains(backLeftJump)) {
-                        endMove = false;
-                        Move next_move = new Move(move);
-                        next_move.add(backLeftJump);
-                        addJumps(jumps, next_move, direction, checker);
-                    }
-                }
-            }
-        }
-        if (endMove && move.getMove().size()>1) {
-            move.isAttack();
-            jumps.add(move);
-        }
+
     }
 
     public void movePiece(Position source, Position destination, boolean isAttack) {
@@ -180,15 +167,12 @@ public class Board {
             setPiece(destination, checker);
             System.out.println("is attack? "+isAttack);
             if (isAttack) {
-                System.out.println("trying to kill");
                 killPiece(between(source, destination));
             }
             int direction = 1;
             if (checker.getColor().equals(Color.BLACK)) {
                 direction = -1;
             }
-            System.out.println(String.format("%s %s", destination.getRow(), (4+4*direction)));
-            System.out.println("tryna king me "+(destination.getRow()==(4+4*direction)));
             if (destination.getRow()==3.5+3.5*direction) {
                 System.out.println("King me!");
                 setPiece(destination, new King(checker.getColor()));
@@ -203,9 +187,7 @@ public class Board {
     }
 
     public void makeMove(Move move) {
-        for (int i = 0; i < move.getMove().size()-1; i++) {
-            movePiece(move.getMove().get(i), move.getMove().get(i+1), move.getIsAttack());
-        }
+        movePiece(move.getMove().get(0), move.getMove().get(1), move.getIsAttack());
     }
 
     public Checker getPiece(Position pos) {
