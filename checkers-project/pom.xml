@@ -4,7 +4,7 @@
 	<groupId>com.cs451.checkers</groupId>
 	<artifactId>checkers-project</artifactId>
 	<packaging>jar</packaging>
-	<version>1.0-SNAPSHOT</version>
+	<version>1.3</version>
 	<build>
 		<plugins>
 			<plugin>
