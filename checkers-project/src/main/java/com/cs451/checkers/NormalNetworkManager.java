@@ -7,6 +7,13 @@ import java.net.SocketException;
 import java.net.URL;
 import java.util.logging.Logger;
 
+import javafx.application.Platform;
+import javafx.scene.Scene;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+
 /**
  * Created by chris on 7/31/16.
  */
@@ -18,7 +25,6 @@ public class NormalNetworkManager implements NetworkManager {
     private static InputStream in;
     private static Socket sock;
     private static ServerSocket s_sock;
-
 
     public static NormalNetworkManager getInstance() {
         if (instance == null) instance = new NormalNetworkManager();

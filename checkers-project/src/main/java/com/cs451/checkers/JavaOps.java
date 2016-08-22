@@ -106,6 +106,9 @@ public class JavaOps {
     }
 
     public void startHost() {
+    	PingOpponentThread pt = new PingOpponentThread(5501);
+    	pt.start();
+    	
     	HostWaitingThread wt = new HostWaitingThread(port);
     	wt.start();
     }
@@ -120,6 +123,12 @@ public class JavaOps {
             URL u = new URL(url + ":" + port);
             NetworkManager net = NormalNetworkManager.getInstance();
             ret = net.connect(u);
+            
+            PingNetworkManager pet = PingNetworkManager.getInstance();
+            URL u2 = new URL(url + ":" + 5501);
+            pet.connect(u2);
+        	PingOpponentThread pt = new PingOpponentThread(5501);
+        	pt.start();
         } catch (MalformedURLException e) {
             // TODO Auto-generated catch block
             log.severe("Error the URL entered was invalid");
