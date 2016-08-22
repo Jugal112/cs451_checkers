@@ -106,6 +106,12 @@ public class GameManager {
 				};
 				ReceiveMessageThread t = new ReceiveMessageThread(port, after);
 				t.start();
+				Platform.runLater(new Runnable() {
+					@Override
+					public void run() {
+						Main.browser.webEngine.executeScript("whoseTurn()");
+					}
+				});
 			}
 		}
 		Platform.runLater(new Runnable() {
