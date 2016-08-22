@@ -15,6 +15,24 @@ To generate static analysis and code coverage reports,
 
 ## Release Notes
 
+### Ver 1.3
+  - Fixed issue with multi-jump turns not being received by opponent
+  - Restart capabilities if users desire to play again after a winner has been declared
+  - Fixed issue with highlights not showing second jump opportunities once a player makes the first jump.
+  - Confetti cannon and victory sound play for the winner.  Winning is now more fun!
+  
+### Ver 1.2
+  - Fixed issue with double jumps being automatically chosen by the computer
+  - Fixed issue where if window is resized vertically then the board stretches vertically instead of scaling proportionately
+  - Randomly chosen player for first turn
+  - Move highlighting for current player’s turn to show user which moves are valid 
+  - Both player’s screens are in sync to show opponent’s decisions in real time by sending moves as they are made.  Before, one player finished their entire turn before it was sent over the network
+  - Fixed issue with checkers not being able to move back-left when the space was vacant and there was a checker to the front-left.
+  
+### Ver 1.1
+  - Executable jar contains the entire game.  No need to compile every time before running
+  - Resizable window for different screen sizes
+  
 ### Ver 1.0
   - Java 1.8
   - JavaFX integration for graphical user interface
@@ -30,21 +48,3 @@ To generate static analysis and code coverage reports,
   - Checkers game is playable
   - Fixed file path issues for platform compatibility
   - Fixed issue with getting midpoint between two locations
-  
-### Ver 1.1
-  - Executable jar contains the entire game.  No need to compile every time before running
-  - Resizable window for different screen sizes
-  
-### Ver 1.2
-  - Fixed issue with double jumps being automatically chosen by the computer
-  - Fixed issue where if window is resized vertically then the board stretches vertically instead of scaling proportionately
-  - Randomly chosen player for first turn
-  - Move highlighting for current player’s turn to show user which moves are valid 
-  - Both player’s screens are in sync to show opponent’s decisions in real time by sending moves as they are made.  Before, one player finished their entire turn before it was sent over the network
-  - Fixed issue with checkers not being able to move back-left when the space was vacant and there was a checker to the front-left.
-  
-### Ver 1.3
-  - Fixed issue with multi-jump turns not being received by opponent
-  - Restart capabilities if users desire to play again after a winner has been declared
-  - Fixed issue with highlights not showing second jump opportunities once a player makes the first jump.
-  - Confetti cannon and victory sound play for the winner.  Winning is now more fun!
