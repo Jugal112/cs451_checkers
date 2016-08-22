@@ -23,7 +23,7 @@ function setWinner(winner){
 		$('.menu #text').text("YOU LOSE!");
 	}
 	
-	$(".menu #playAgain").show();
+	$(".menu #restart button").show();
 }
 
 function setTurn(t){
@@ -78,11 +78,12 @@ function kingMe(squareId){
 }
 
 function setupGame(){
-	$('.menu #text').text("Initializing...");
+	$('.menu #text').text("Waiting for Player...");
 	javaOp.initializeGame(networkingRole);
 }
 
 function startGame(c){
+	putPiecesOnBoard();
 	turn = Colors.BLACK;
 	color = Colors[c];
 	whoseTurn();
@@ -155,6 +156,12 @@ function setupBoardUI(){
 	});
 	
 	$('.pane').append(generateBoard());
+	
+	$(document).on('click', '#restart button', function(){
+		$(this).hide();
+		setupGame();
+		clearSurprise();
+	});
 	
 	$(document).ready(function(){
 		putPiecesOnBoard();

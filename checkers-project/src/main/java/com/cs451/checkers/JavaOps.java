@@ -38,9 +38,9 @@ public class JavaOps {
     		gm.initGame();
 			gm.setCurrentPlayer(Player.PLAYER1);
     		
-    		Function<Integer, Integer> after = new Function<Integer, Integer>() {
+    		Function<NetworkMessage, Integer> after = new Function<NetworkMessage, Integer>() {
 			@Override
-				public Integer apply(Integer t) {
+				public Integer apply(NetworkMessage t) {
 				// TODO Auto-generated method stub
 			        return gm.sendInitializationData(gm.player1);
 				}
@@ -49,8 +49,10 @@ public class JavaOps {
  			InitializationMessage im = new InitializationMessage();
  			im.set(gm.player1);
  			
- 			SendMessageThread mt = new SendMessageThread(port, im, after);
+ 			SendMessageThread mt = new SendMessageThread(port, im, null);
  	    	mt.start();
+ 	    	ReceiveMessageThread rt = new ReceiveMessageThread(port, after);
+ 	    	rt.start();
     	}
     	else{
   			
@@ -64,6 +66,7 @@ public class JavaOps {
 					InitializationMessage im = (InitializationMessage)t;
 					gm.initGame((Color) im.get());
 					gm.setCurrentPlayer(Player.PLAYER2);
+					NormalNetworkManager.getInstance().sendMessage(new PingNetworkMessage());
 
 					return gm.sendInitializationData(gm.player2);
 				}
