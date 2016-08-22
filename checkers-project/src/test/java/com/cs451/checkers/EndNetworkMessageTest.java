@@ -16,7 +16,7 @@ public class EndNetworkMessageTest extends TestCase {
 	}
 
 	public void testGetType() {
-		assertTrue(new EndNetworkMessage().getClass().equals(EndNetworkMessage.class));
+		assertTrue(new EndNetworkMessage().getType().equals(EndNetworkMessage.class));
 	}
 
 }
