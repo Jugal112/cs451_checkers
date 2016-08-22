@@ -104,7 +104,7 @@ public class Board {
     }
 
     public ArrayList<Move> getJumpMoves(Position pos, Color color) {
-        ArrayList<Move> jumps = new ArrayList<>();
+        ArrayList<Move> jumps = new ArrayList<Move>();
         Checker checker = getPiece(pos);
         if (checker instanceof Checker && checker.getColor() == color) {
             int direction = 1;

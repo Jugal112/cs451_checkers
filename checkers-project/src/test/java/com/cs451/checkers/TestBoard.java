@@ -50,11 +50,11 @@ public class TestBoard extends TestCase {
 		for (int i = 0; i < strArr.length; i++) {
 			for (int j = 0; j < strArr[i].length; j++) {
 				if(i < 3){
-					assertTrue("Value at " + i + "," + j, "inv".equals(strArr[i][j]) || Color.RED.equals(strArr[i][j]));
+					assertTrue("Value at " + i + "," + j, "inv".equals(strArr[i][j]) || Color.RED.toString().equals(strArr[i][j]));
 				} else if(i == 3 || i == 4){
 					assertTrue("Value at " + i + "," + j, "inv".equals(strArr[i][j]) || strArr[i][j] == null);
 				} else if(i > 5){
-					assertTrue("Value at " + i + "," + j, "inv".equals(strArr[i][j]) || Color.BLACK.equals(strArr[i][j]));
+					assertTrue("Value at " + i + "," + j, "inv".equals(strArr[i][j]) || Color.BLACK.toString().equals(strArr[i][j]));
 				}
 			}
 		}
@@ -98,7 +98,10 @@ public class TestBoard extends TestCase {
 	}
 
 	public void testMakeMove() {
-		// fail("Not yet implemented");
+		testBoard = new Board();
+		Position redPiece = new Position(2, 1);
+		Move theRealMove = testBoard.getValidMoves(Color.RED).get(0);
+		testBoard.makeMove(theRealMove);
 	}
 
 	public void testGetPiecePosition() {
@@ -160,6 +163,17 @@ public class TestBoard extends TestCase {
 		testBoard.setPiece(new Position(3, 2), new King(Color.BLACK));
 		//System.out.println(displayBoardArr(testBoard.toStringArray()));
 		ArrayList<Move> m = testBoard.getRegularMoves(new Position(3,2), Color.RED);
+		assertTrue(m.size() == 0);
+		
+		//System.out.println(displayBoardArr(testBoard.toStringArray()));
+		testBoard.killPiece(new Position(2,1));
+		testBoard.killPiece(new Position(2,3));
+		testBoard.killPiece(new Position(2,5));
+		testBoard.killPiece(new Position(2,7));
+		testBoard.killPiece(new Position(4,1));
+		testBoard.killPiece(new Position(4,3));
+		System.out.println(displayBoardArr(testBoard.toStringArray()));
+		m = testBoard.getRegularMoves(new Position(3,2), Color.BLACK);
 		assertTrue(m.size() == 4);
 	}
 	
