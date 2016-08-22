@@ -1,7 +1,18 @@
-Proof of Version Control: https://github.com/Jugal112/cs451_checkers
-
 # cs451_checkers
 Checkers game made in Java
+
+## Proof of Version Control: 
+
+https://github.com/Jugal112/cs451_checkers
+
+## Code Coverage Analysis: 
+
+*Cobertura Coverage Report*
+
+## Static Analysis: 
+
+*FindBugs Report*
+
 ## Instructions
 To generate a runnable jar, 
 
@@ -14,6 +25,9 @@ To generate static analysis and code coverage reports,
 1. run: " mvn clean; mvn package -DskipTests; mvn findbugs:findbugs site"
 
 2. navigate to cs451_checkers\checkers-project\target\site\project-reports.html
+
+3. navigate to the Cobertura Coverage Report and FindBugs Reports from there
+
 
 ## Release Notes
 
