@@ -1,3 +1,5 @@
+Proof of Version Control: https://github.com/Jugal112/cs451_checkers
+
 # cs451_checkers
 Checkers game made in Java
 ## Instructions
